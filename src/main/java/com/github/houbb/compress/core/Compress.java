@@ -9,15 +9,17 @@ package com.github.houbb.compress.core;
  */
 public interface Compress {
 
-
     /**
      * 压缩
+     * @param path 文件路径
+     * @param paths 额外文件路径（仅供归档类使用）
      */
-    void compress();
+    void compress(final String path, final String ... paths);
 
     /**
      * 解压
+     * @param path 文件路径
      */
-    void uncompress();
+    void unCompress(final String path);
 
 }
