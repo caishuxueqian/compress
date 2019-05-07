@@ -8,6 +8,4 @@ package com.github.houbb.compress.handler;
  * @since 0.0.1
  */
 public interface HandlerPipeline {
-
-
 }

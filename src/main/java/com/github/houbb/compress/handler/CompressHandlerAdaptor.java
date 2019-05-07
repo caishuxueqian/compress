@@ -1,6 +1,8 @@
 package com.github.houbb.compress.handler;
 
-import com.github.houbb.compress.context.IHandlerContext;
+import com.github.houbb.compress.context.CompressContext;
+import com.github.houbb.compress.context.IContext;
+import com.github.houbb.compress.context.UnCompressContext;
 
 /**
  * 压缩器-适配器
@@ -10,8 +12,12 @@ import com.github.houbb.compress.context.IHandlerContext;
 public class CompressHandlerAdaptor implements CompressHandler {
 
     @Override
-    public void uncompress(IHandlerContext context) {
+    public void compress(CompressContext context) {
 
     }
 
+    @Override
+    public void unCompress(UnCompressContext context) {
+
+    }
 }
