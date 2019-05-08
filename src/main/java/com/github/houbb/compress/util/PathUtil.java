@@ -1,6 +1,8 @@
 package com.github.houbb.compress.util;
 
 import com.github.houbb.compress.annotation.CommonEager;
+import com.github.houbb.compress.support.filter.PathCondition;
+import com.github.houbb.compress.support.filter.PathFilter;
 import com.github.houbb.heaven.util.lang.ObjectUtil;
 import com.github.houbb.heaven.util.lang.StringUtil;
 import com.github.houbb.heaven.util.util.CollectionUtil;
@@ -24,6 +26,26 @@ public class PathUtil {
      */
     private static final Path ROOT_PATH = Paths.get("/");
 
+    /**
+     * 获取满足条件的列表
+     * @param pathList 路径
+     * @param pathCondition 条件
+     * @return 结果
+     */
+    public static List<Path> getConditionList(final List<Path> pathList,
+                                            final PathCondition pathCondition) {
+        if(CollectionUtil.isEmpty(pathList)) {
+            return Collections.emptyList();
+        }
+
+        List<Path> conditionList = new ArrayList<>();
+        for(Path path : pathList) {
+            if(pathCondition.condition(path)) {
+                conditionList.add(path);
+            }
+        }
+        return conditionList;
+    }
 
     /**
      * 获取 path 相对于 parentPath 剩余的路径

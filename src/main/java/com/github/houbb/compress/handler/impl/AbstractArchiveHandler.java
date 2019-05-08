@@ -4,6 +4,7 @@ import com.github.houbb.compress.context.ArchiveContext;
 import com.github.houbb.compress.context.IContext;
 import com.github.houbb.compress.exception.CompressRuntimeException;
 import com.github.houbb.compress.handler.adaptor.ArchiveHandlerAdaptor;
+import com.github.houbb.compress.support.filter.PathCondition;
 import com.github.houbb.compress.util.CompressFileUtil;
 import com.github.houbb.compress.util.PathUtil;
 import org.apache.commons.compress.archivers.ArchiveEntry;
@@ -49,6 +50,15 @@ abstract class AbstractArchiveHandler extends ArchiveHandlerAdaptor {
     }
 
     /**
+     * 是否归档文件夹
+     * 1. jar 是不需要归档文件夹的。
+     * @return 是
+     */
+    protected boolean archiveDir() {
+        return true;
+    }
+
+    /**
      * 默认的实现方式
      * @param context 上下文
      */
@@ -67,12 +77,15 @@ abstract class AbstractArchiveHandler extends ArchiveHandlerAdaptor {
                 final String entryName = getEntryName(publicParentPath, fileToArchive, context);
                 final ArchiveEntry entry = getArchiveEntry(outputStream, fileToArchive, entryName);
 
-                if(Files.isDirectory(path)) {
+                if(Files.isDirectory(path)
+                    && archiveDir()) {
                     outputStream.putArchiveEntry(entry);
-                } else {
+                } else if(fileToArchive.isFile()) {
                     final byte[] contentOfEntry = Files.readAllBytes(path);
                     outputStream.putArchiveEntry(entry);
                     outputStream.write(contentOfEntry);
+                } else {
+                    //ignore
                 }
             }
             outputStream.closeArchiveEntry();
@@ -87,11 +100,29 @@ abstract class AbstractArchiveHandler extends ArchiveHandlerAdaptor {
      * @return 路径列表
      */
     private List<Path> buildAllPaths(final List<Path> pathList) {
+        List<Path> resultPaths = new ArrayList<>();
         List<Path> allPaths = new ArrayList<>();
         for(Path path : pathList) {
             allPaths.addAll(CompressFileUtil.getPathList(path));
         }
-        return allPaths;
+
+        //1. 排序一下，文件夹放在前面。文件放在后面，不然会出现先创建建文件，再创建文件夹的错误问题。
+        List<Path> dirList = PathUtil.getConditionList(allPaths, new PathCondition() {
+            @Override
+            public boolean condition(Path path) {
+                return Files.isDirectory(path);
+            }
+        });
+        List<Path> fileList = PathUtil.getConditionList(allPaths, new PathCondition() {
+            @Override
+            public boolean condition(Path path) {
+                return path.toFile().isFile();
+            }
+        });
+        resultPaths.addAll(dirList);
+        resultPaths.addAll(fileList);
+
+        return resultPaths;
     }
 
     /**
