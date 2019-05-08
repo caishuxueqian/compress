@@ -5,8 +5,6 @@ import org.apache.commons.compress.archivers.ArchiveEntry;
 import org.apache.commons.compress.archivers.ArchiveOutputStream;
 import org.apache.commons.compress.archivers.jar.JarArchiveEntry;
 import org.apache.commons.compress.archivers.jar.JarArchiveOutputStream;
-import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
-import org.apache.commons.compress.archivers.tar.TarArchiveOutputStream;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,11 +17,6 @@ import java.io.FileOutputStream;
  * @since 1.0.0
  */
 public class JarArchiveHandler extends AbstractArchiveHandler {
-
-    @Override
-    protected boolean archiveDir() {
-        return false;
-    }
 
     @Override
     protected ArchiveOutputStream getArchiveOutputStream(File targetFile, String password) {

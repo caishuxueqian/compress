@@ -54,6 +54,7 @@ abstract class AbstractArchiveHandler extends ArchiveHandlerAdaptor {
      * 1. jar 是不需要归档文件夹的。
      * @return 是
      */
+    @Deprecated
     protected boolean archiveDir() {
         return true;
     }
@@ -77,8 +78,7 @@ abstract class AbstractArchiveHandler extends ArchiveHandlerAdaptor {
                 final String entryName = getEntryName(publicParentPath, fileToArchive, context);
                 final ArchiveEntry entry = getArchiveEntry(outputStream, fileToArchive, entryName);
 
-                if(Files.isDirectory(path)
-                    && archiveDir()) {
+                if(Files.isDirectory(path)) {
                     outputStream.putArchiveEntry(entry);
                 } else if(fileToArchive.isFile()) {
                     final byte[] contentOfEntry = Files.readAllBytes(path);
