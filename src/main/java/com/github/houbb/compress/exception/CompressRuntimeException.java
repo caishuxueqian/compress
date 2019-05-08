@@ -25,4 +25,13 @@ public class CompressRuntimeException extends RuntimeException{
     public CompressRuntimeException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
+
+    /**
+     * 重新抛出异常
+     * @param cause 原因
+     */
+    public static void rethrow(Throwable cause) {
+        throw new CompressRuntimeException(cause);
+    }
+
 }

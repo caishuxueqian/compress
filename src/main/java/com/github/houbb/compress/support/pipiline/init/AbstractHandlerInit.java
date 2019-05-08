@@ -1,7 +1,7 @@
-package com.github.houbb.compress.handler.init;
+package com.github.houbb.compress.support.pipiline.init;
 
-import com.github.houbb.compress.handler.HandlerAdaptor;
-import com.github.houbb.compress.handler.HandlerPipeline;
+import com.github.houbb.compress.handler.adaptor.HandlerAdaptor;
+import com.github.houbb.compress.support.pipiline.HandlerPipeline;
 
 /**
  * 抽象的 handler 初始化类

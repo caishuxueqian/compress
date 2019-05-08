@@ -1,4 +1,6 @@
-package com.github.houbb.compress.context;
+package com.github.houbb.compress.context.impl;
+
+import com.github.houbb.compress.context.CompressContext;
 
 /**
  * 默认的压缩上下文实现

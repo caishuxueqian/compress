@@ -1,5 +1,7 @@
 package com.github.houbb.compress.util;
 
+import com.github.houbb.compress.annotation.CommonEager;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
@@ -15,7 +17,7 @@ import java.util.List;
  * @author binbin.hou
  * @since 0.0.1
  */
-@Deprecated
+@CommonEager
 public class CompressFileUtil {
 
     /**

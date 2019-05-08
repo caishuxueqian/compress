@@ -1,10 +1,9 @@
 package com.github.houbb.compress.handler;
 
 /**
- * handler 接口适配器
- *
+ * 解压缩器接口
  * @author binbin.hou
  * @since 0.0.1
  */
-public class HandlerAdaptor implements IHandler {
+public interface UnCompressHandler extends IHandler {
 }

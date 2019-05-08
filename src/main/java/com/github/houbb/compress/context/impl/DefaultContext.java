@@ -1,4 +1,6 @@
-package com.github.houbb.compress.context;
+package com.github.houbb.compress.context.impl;
+
+import com.github.houbb.compress.context.IContext;
 
 import java.nio.file.Path;
 import java.util.ArrayList;

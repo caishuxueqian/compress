@@ -1,15 +1,15 @@
 package com.github.houbb.compress.handler.archiver;
 
-import com.github.houbb.compress.context.DefaultCompressContext;
-import com.github.houbb.compress.context.DefaultContext;
-import com.github.houbb.compress.context.DefaultUnCompressContext;
-import com.github.houbb.compress.context.IContext;
-import com.github.houbb.compress.handler.CompressHandler;
+import com.github.houbb.compress.context.impl.DefaultArchiveContext;
+import com.github.houbb.compress.context.impl.DefaultUnArchiveContext;
+import com.github.houbb.compress.handler.ArchiveHandler;
+import com.github.houbb.compress.handler.UnArchiveHandler;
+import com.github.houbb.compress.handler.impl.TarArchiveHandler;
+import com.github.houbb.compress.handler.impl.TarUnArchiveHandler;
 import org.junit.Test;
 
 import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.Collections;
 
 /**
  * @author binbin.hou
@@ -17,58 +17,56 @@ import java.util.Collections;
  */
 public class TarArchiveHandlerTest {
 
+    /**
+     * 解档压缩文件
+     */
     @Test
-    public void unCompressTest() {
+    public void unArchiveTest() {
         final String zipPath = "C:\\Users\\binbin.hou\\Desktop\\2.tar";
         final String targetPath = "C:\\Users\\binbin.hou\\Desktop\\";
-        CompressHandler compressHandler = new TarArchiveHandler();
-        DefaultUnCompressContext handlerContext = new DefaultUnCompressContext();
+
+        UnArchiveHandler handler = new TarUnArchiveHandler();
+
+        DefaultUnArchiveContext handlerContext = new DefaultUnArchiveContext();
         handlerContext.setSourcePaths(Arrays.asList(Paths.get(zipPath)));
         handlerContext.setTargetPath(Paths.get(targetPath));
-        compressHandler.unCompress(handlerContext);
-                ;
-        compressHandler.unCompress(handlerContext);
+        handler.handle(handlerContext);
     }
 
+    /**
+     * 使用相对路径归档文件
+     */
     @Test
-    public void compressFilesTest() {
-        final String targetPath = "C:\\Users\\binbin.hou\\Desktop\\test.tar";
-        final String sourcePath1 = "C:\\Users\\binbin.hou\\Desktop\\1.txt";
-        final String sourcePath2 = "C:\\Users\\binbin.hou\\Desktop\\2.txt";
-
-        CompressHandler compressHandler = new TarArchiveHandler();
-        DefaultCompressContext handlerContext = new DefaultCompressContext();
-
-        handlerContext.setSourcePaths(Arrays.asList(Paths.get(sourcePath1), Paths.get(sourcePath2)));
-        handlerContext.setTargetPath(Paths.get(targetPath));
-        compressHandler.compress(handlerContext);
-    }
-
-    @Test
-    public void compressDirTest() {
+    public void archiveDirRelativePathTest() {
         final String targetPath = "C:\\Users\\binbin.hou\\Desktop\\1.tar";
         final String sourceDir = "C:\\Users\\binbin.hou\\Desktop\\1\\";
 
-        CompressHandler compressHandler = new TarArchiveHandler();
+        ArchiveHandler archiveHandler = new TarArchiveHandler();
 
-        DefaultCompressContext handlerContext = new DefaultCompressContext();
+        DefaultArchiveContext handlerContext = new DefaultArchiveContext();
         handlerContext.setSourcePaths(Arrays.asList(Paths.get(sourceDir)));
         handlerContext.setTargetPath(Paths.get(targetPath));
         handlerContext.setRelativePath(true);
-        compressHandler.compress(handlerContext);
+
+        archiveHandler.handle(handlerContext);
     }
 
+    /**
+     * 使用绝对路径归档文件
+     */
     @Test
-    public void compressDirNotRelativeTest() {
+    public void archiveDirNotRelativeTest() {
         final String targetPath = "C:\\Users\\binbin.hou\\Desktop\\2.tar";
         final String sourceDir = "C:\\Users\\binbin.hou\\Desktop\\1\\";
 
-        CompressHandler compressHandler = new TarArchiveHandler();
+        ArchiveHandler archiveHandler = new TarArchiveHandler();
 
-        DefaultCompressContext handlerContext = new DefaultCompressContext();
+        DefaultArchiveContext handlerContext = new DefaultArchiveContext();
         handlerContext.setSourcePaths(Arrays.asList(Paths.get(sourceDir)));
         handlerContext.setTargetPath(Paths.get(targetPath));
-        compressHandler.compress(handlerContext);
+        handlerContext.setRelativePath(false);
+
+        archiveHandler.handle(handlerContext);
     }
 
 }

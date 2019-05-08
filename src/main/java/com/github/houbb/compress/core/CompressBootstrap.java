@@ -2,15 +2,13 @@ package com.github.houbb.compress.core;
 
 import com.github.houbb.compress.handler.IHandler;
 
-import java.util.logging.Handler;
-
 /**
  * 压缩引导类
  * 1. 如果是文件夹，是否递归压缩/解压。
  * @author binbin.hou
  * @since 0.0.1
  */
-public class CompressBootstrap implements Compress {
+public class CompressBootstrap{
 
     private CompressBootstrap(){}
 
@@ -62,17 +60,6 @@ public class CompressBootstrap implements Compress {
      */
     public CompressBootstrap handler(final IHandler handler, final IHandler handlers) {
         return this;
-    }
-
-
-    @Override
-    public void compress(String path, String... paths) {
-
-    }
-
-    @Override
-    public void unCompress(String path) {
-
     }
 
 }

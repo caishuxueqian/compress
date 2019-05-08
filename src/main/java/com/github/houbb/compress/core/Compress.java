@@ -7,6 +7,7 @@ package com.github.houbb.compress.core;
  * @author binbin.hou
  * @since 0.0.1
  */
+@Deprecated
 public interface Compress {
 
     /**

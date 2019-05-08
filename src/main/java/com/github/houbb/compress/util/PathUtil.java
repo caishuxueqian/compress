@@ -1,18 +1,22 @@
 package com.github.houbb.compress.util;
 
+import com.github.houbb.compress.annotation.CommonEager;
 import com.github.houbb.heaven.util.lang.ObjectUtil;
 import com.github.houbb.heaven.util.lang.StringUtil;
-import com.github.houbb.heaven.util.util.ArrayUtil;
 import com.github.houbb.heaven.util.util.CollectionUtil;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
+ * 路径工具类
  * @author binbin.hou
  * @since 0.0.1
  */
+@CommonEager
 public class PathUtil {
 
     /**
@@ -42,7 +46,7 @@ public class PathUtil {
 
         final String parentPathStr = parentPath.toString();
         if(pathStr.startsWith(parentPathStr)) {
-            return pathStr.substring(parentPathStr.length());
+            return pathStr.substring(parentPathStr.length()+1);
         }
         return pathStr;
     }
