@@ -1,11 +1,11 @@
 package com.github.houbb.compress.handler.archiver;
 
-import com.github.houbb.compress.context.impl.DefaultArchiveContext;
-import com.github.houbb.compress.context.impl.DefaultUnArchiveContext;
+import com.github.houbb.compress.context.impl.DefaultCompressContext;
 import com.github.houbb.compress.handler.archive.ServenZArchiveHandler;
 import com.github.houbb.compress.handler.archive.ServenZUnArchiveHandler;
 import org.apache.commons.compress.archivers.sevenz.SevenZArchiveEntry;
 import org.apache.commons.compress.archivers.sevenz.SevenZOutputFile;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
@@ -18,6 +18,7 @@ import java.util.Arrays;
  * @author binbin.hou
  * @since 0.0.1
  */
+@Ignore
 public class SevenZArchiveHandlerTest {
 
     @Test
@@ -25,10 +26,10 @@ public class SevenZArchiveHandlerTest {
         final String sourcePath = "C:\\Users\\binbin.hou\\Desktop\\1.txt";
         final String targetPath = "C:\\Users\\binbin.hou\\Desktop\\7zFileRelative.7z";
 
-        DefaultArchiveContext context = new DefaultArchiveContext();
-        context.setSourcePaths(Arrays.asList(Paths.get(sourcePath)));
-        context.setTargetPath(Paths.get(targetPath));
-        context.setRelativePath(true);
+        DefaultCompressContext context = new DefaultCompressContext();
+        context.sourcePaths(Arrays.asList(Paths.get(sourcePath)));
+        context.targetPath(Paths.get(targetPath));
+        context.isRelativePath(true);
 
         new ServenZArchiveHandler().handle(context);
     }
@@ -38,10 +39,10 @@ public class SevenZArchiveHandlerTest {
         final String targetPath = "C:\\Users\\binbin.hou\\Desktop\\notRelativeDir.7z";
         final String sourcePath = "C:\\Users\\binbin.hou\\Desktop\\1";
 
-        DefaultArchiveContext context = new DefaultArchiveContext();
-        context.setSourcePaths(Arrays.asList(Paths.get(sourcePath)));
-        context.setTargetPath(Paths.get(targetPath));
-        context.setRelativePath(false);
+        DefaultCompressContext context = new DefaultCompressContext();
+        context.sourcePaths(Arrays.asList(Paths.get(sourcePath)));
+        context.targetPath(Paths.get(targetPath));
+        context.isRelativePath(false);
 
         new ServenZArchiveHandler().handle(context);
     }
@@ -51,9 +52,9 @@ public class SevenZArchiveHandlerTest {
         final String targetPath = "C:\\Users\\binbin.hou\\Desktop\\7z";
         final String sourcePath = "C:\\Users\\binbin.hou\\Desktop\\1.7z";
 
-        DefaultUnArchiveContext context = new DefaultUnArchiveContext();
-        context.setSourcePaths(Arrays.asList(Paths.get(sourcePath)));
-        context.setTargetPath(Paths.get(targetPath));
+        DefaultCompressContext context = new DefaultCompressContext();
+        context.sourcePaths(Arrays.asList(Paths.get(sourcePath)));
+        context.targetPath(Paths.get(targetPath));
         new ServenZUnArchiveHandler().handle(context);
     }
 

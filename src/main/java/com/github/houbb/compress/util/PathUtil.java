@@ -2,7 +2,6 @@ package com.github.houbb.compress.util;
 
 import com.github.houbb.compress.annotation.CommonEager;
 import com.github.houbb.compress.support.filter.PathCondition;
-import com.github.houbb.compress.support.filter.PathFilter;
 import com.github.houbb.heaven.util.lang.ObjectUtil;
 import com.github.houbb.heaven.util.lang.StringUtil;
 import com.github.houbb.heaven.util.util.CollectionUtil;

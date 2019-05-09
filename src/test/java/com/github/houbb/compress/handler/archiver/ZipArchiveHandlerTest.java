@@ -1,11 +1,11 @@
 package com.github.houbb.compress.handler.archiver;
 
-import com.github.houbb.compress.context.impl.DefaultArchiveContext;
-import com.github.houbb.compress.context.impl.DefaultUnArchiveContext;
+import com.github.houbb.compress.context.impl.DefaultCompressContext;
 import com.github.houbb.compress.handler.ArchiveHandler;
 import com.github.houbb.compress.handler.UnArchiveHandler;
 import com.github.houbb.compress.handler.archive.ZipArchiveHandler;
 import com.github.houbb.compress.handler.archive.ZipUnArchiveHandler;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.nio.file.Paths;
@@ -15,6 +15,7 @@ import java.util.Arrays;
  * @author binbin.hou
  * @since 0.0.1
  */
+@Ignore
 public class ZipArchiveHandlerTest {
 
     /**
@@ -27,9 +28,9 @@ public class ZipArchiveHandlerTest {
 
         UnArchiveHandler handler = new ZipUnArchiveHandler();
 
-        DefaultUnArchiveContext handlerContext = new DefaultUnArchiveContext();
-        handlerContext.setSourcePaths(Arrays.asList(Paths.get(zipPath)));
-        handlerContext.setTargetPath(Paths.get(targetPath));
+        DefaultCompressContext handlerContext = new DefaultCompressContext();
+        handlerContext.sourcePaths(Arrays.asList(Paths.get(zipPath)));
+        handlerContext.targetPath(Paths.get(targetPath));
         handler.handle(handlerContext);
     }
 
@@ -43,10 +44,10 @@ public class ZipArchiveHandlerTest {
 
         ArchiveHandler archiveHandler = new ZipArchiveHandler();
 
-        DefaultArchiveContext handlerContext = new DefaultArchiveContext();
-        handlerContext.setSourcePaths(Arrays.asList(Paths.get(sourceDir)));
-        handlerContext.setTargetPath(Paths.get(targetPath));
-        handlerContext.setRelativePath(true);
+        DefaultCompressContext handlerContext = new DefaultCompressContext();
+        handlerContext.sourcePaths(Arrays.asList(Paths.get(sourceDir)));
+        handlerContext.targetPath(Paths.get(targetPath));
+        handlerContext.isRelativePath(true);
 
         archiveHandler.handle(handlerContext);
     }

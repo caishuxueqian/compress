@@ -1,65 +1,65 @@
 package com.github.houbb.compress.core;
 
-import com.github.houbb.compress.handler.IHandler;
+import com.github.houbb.compress.context.ICompressContext;
+import com.github.houbb.compress.handler.ICompressHandler;
+import com.github.houbb.heaven.annotation.NotThreadSafe;
+import com.github.houbb.heaven.support.instance.impl.InstanceFactory;
 
 /**
  * 压缩引导类
- * 1. 如果是文件夹，是否递归压缩/解压。
+ * 1. 可以连续调用多个的 handler
  * @author binbin.hou
  * @since 0.0.1
  */
-public class CompressBootstrap{
+@NotThreadSafe
+public class CompressBootstrap {
 
+    /**
+     * 处理器
+     */
+    private ICompressHandler compressHandler;
+
+    /**
+     * 处理上下文
+     */
+    private ICompressContext compressContext;
+
+    /**
+     * 构造器私有化
+     */
     private CompressBootstrap(){}
 
     /**
-     * 目标文件路径
-     * 1. 默认和原始文件保持一致
-     */
-    private String target;
-
-    /**
-     * 加密密码
-     */
-    private String password;
-
-    /**
-     * 创建一个实例
-     * @return 实例
-     */
-    public static CompressBootstrap newInstance() {
-        return new CompressBootstrap();
-    }
-
-    /**
-     * 指定目标文件
-     * @param target 路径
+     * 处理器的类
+     * @param handlerClass 处理器类
      * @return 引导类本身
      */
-    public CompressBootstrap target(final String target) {
-        this.target = target;
+    public static CompressBootstrap handler(final Class<? extends ICompressHandler> handlerClass) {
+        CompressBootstrap compressBootstrap = new CompressBootstrap();
+        compressBootstrap.setHandler(handlerClass);
+        return compressBootstrap;
+    }
+
+    public CompressBootstrap context(final ICompressContext compressContext) {
+        // 一个 handler 是否可以对应多个上下文？？
+        // 如果可以，则创建对应的 init，目前不处理。
+        this.compressContext = compressContext;
         return this;
     }
 
     /**
-     * 指定密码
-     * @param password 密码
-     * @return 引导类本身
+     * 执行归档/解归档操作
      */
-    public CompressBootstrap password(final String password) {
-        this.password = password;
-        return this;
+    public void compress() {
+        this.compressHandler.handle(compressContext);
     }
 
     /**
-     * 接口的处理
-     * 1. 所有的 handler 内部应该交给 handlerPipeline 处理.
-     * @param handler 第一个处理器
-     * @param handlers 其他的处理器
-     * @return 引导类本身
+     * 处理器的类
+     * @param handlerClass 处理器类
      */
-    public CompressBootstrap handler(final IHandler handler, final IHandler handlers) {
-        return this;
+    private void setHandler(final Class<? extends ICompressHandler> handlerClass) {
+        this.compressHandler = InstanceFactory.getInstance().singleton(handlerClass);
     }
 
 }

@@ -1,7 +1,6 @@
 package com.github.houbb.compress.handler.archive;
 
-import com.github.houbb.compress.context.IContext;
-import com.github.houbb.compress.context.UnArchiveContext;
+import com.github.houbb.compress.context.ICompressContext;
 import com.github.houbb.compress.exception.CompressRuntimeException;
 import com.github.houbb.compress.handler.adaptor.UnArchiveHandlerAdaptor;
 import com.github.houbb.compress.util.CompressFileUtil;
@@ -19,15 +18,6 @@ import java.io.IOException;
 abstract class AbstractUnArchiveHandler extends UnArchiveHandlerAdaptor {
 
     /**
-     * 归档上下文
-     */
-    private UnArchiveContext unArchiveContext;
-
-    public void setUnArchiveContext(UnArchiveContext unArchiveContext) {
-        this.unArchiveContext = unArchiveContext;
-    }
-
-    /**
      * 获取文件输入流
      * @param sourceFile 原始文件
      * @param password 密码
@@ -37,14 +27,14 @@ abstract class AbstractUnArchiveHandler extends UnArchiveHandlerAdaptor {
                                                                 final String password);
 
     @Override
-    public void handle(final IContext context) {
-        this.doHandler((UnArchiveContext) context);
+    public void handle(final ICompressContext context) {
+        this.doHandler(context);
     }
 
-    protected void doHandler(final UnArchiveContext context) {
-        final File sourceFile = context.getSourcePathFirst().toFile();
-        final File targetDir = context.getTargetPath().toFile();
-        final String password = context.getPassword();
+    protected void doHandler(final ICompressContext context) {
+        final File sourceFile = context.sourcePathFirst().toFile();
+        final File targetDir = context.targetPath().toFile();
+        final String password = context.password();
 
         try(ArchiveInputStream inputStream = getArchiveInputStream(sourceFile, password)) {
             ArchiveEntry entry = inputStream.getNextEntry();

@@ -1,7 +1,6 @@
 package com.github.houbb.compress.handler.archive;
 
-import com.github.houbb.compress.context.ArchiveContext;
-import com.github.houbb.compress.context.IContext;
+import com.github.houbb.compress.context.ICompressContext;
 import com.github.houbb.compress.exception.CompressRuntimeException;
 import com.github.houbb.compress.handler.adaptor.ArchiveHandlerAdaptor;
 import com.github.houbb.compress.support.filter.PathCondition;
@@ -44,8 +43,8 @@ abstract class AbstractArchiveHandler extends ArchiveHandlerAdaptor {
 
 
     @Override
-    public void handle(IContext context) {
-        this.doHandle((ArchiveContext) context);
+    public void handle(ICompressContext context) {
+        this.doHandle(context);
     }
 
     /**
@@ -62,12 +61,12 @@ abstract class AbstractArchiveHandler extends ArchiveHandlerAdaptor {
      * 默认的实现方式
      * @param context 上下文
      */
-    protected void doHandle(final ArchiveContext context) {
+    protected void doHandle(final ICompressContext context) {
         // 基础信息
-        final File targetFile = context.getTargetPath().toFile();
-        final List<Path> pathList = buildAllPaths(context.getSourcePaths());
-        final Path publicParentPath = PathUtil.getPublicParentPath(context.getSourcePaths());
-        final String password = context.getPassword();
+        final File targetFile = context.targetPath().toFile();
+        final List<Path> pathList = buildAllPaths(context.sourcePaths());
+        final Path publicParentPath = PathUtil.getPublicParentPath(context.sourcePaths());
+        final String password = context.password();
 
         try(ArchiveOutputStream outputStream = this.getArchiveOutputStream(targetFile, password)){
             // 循环添加 entry 进入归档
@@ -133,7 +132,7 @@ abstract class AbstractArchiveHandler extends ArchiveHandlerAdaptor {
      */
     private String getEntryName(final Path publicParentPath,
                                 final File fileToArchive,
-                                final ArchiveContext compressContext) {
+                                final ICompressContext compressContext) {
         if(compressContext.isRelativePath()) {
             return PathUtil.getRelativePath(publicParentPath, fileToArchive.toPath());
         } else {

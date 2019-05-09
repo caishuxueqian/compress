@@ -1,12 +1,10 @@
 package com.github.houbb.compress.handler.other;
 
 import org.apache.commons.compress.archivers.sevenz.SevenZArchiveEntry;
-import org.apache.commons.compress.archivers.sevenz.SevenZFile;
 import org.apache.commons.compress.archivers.sevenz.SevenZOutputFile;
+import org.junit.Ignore;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -18,6 +16,7 @@ import java.nio.file.Paths;
  * @author binbin.hou
  * @since 0.0.1
  */
+@Ignore
 public class SevenZ {
 
     public static void compress(String name, File file) throws IOException {

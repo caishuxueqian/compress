@@ -1,13 +1,11 @@
 package com.github.houbb.compress.handler.archiver;
 
-import com.github.houbb.compress.context.impl.DefaultArchiveContext;
-import com.github.houbb.compress.context.impl.DefaultUnArchiveContext;
+import com.github.houbb.compress.context.impl.DefaultCompressContext;
 import com.github.houbb.compress.handler.ArchiveHandler;
 import com.github.houbb.compress.handler.UnArchiveHandler;
-import com.github.houbb.compress.handler.impl.JarArchiveHandler;
-import com.github.houbb.compress.handler.impl.JarUnArchiveHandler;
-import com.github.houbb.compress.handler.impl.TarArchiveHandler;
-import com.github.houbb.compress.handler.impl.TarUnArchiveHandler;
+import com.github.houbb.compress.handler.archive.JarArchiveHandler;
+import com.github.houbb.compress.handler.archive.JarUnArchiveHandler;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.nio.file.Paths;
@@ -17,6 +15,7 @@ import java.util.Arrays;
  * @author binbin.hou
  * @since 0.0.1
  */
+@Ignore
 public class JarArchiveHandlerTest {
 
     /**
@@ -29,9 +28,9 @@ public class JarArchiveHandlerTest {
 
         UnArchiveHandler handler = new JarUnArchiveHandler();
 
-        DefaultUnArchiveContext handlerContext = new DefaultUnArchiveContext();
-        handlerContext.setSourcePaths(Arrays.asList(Paths.get(zipPath)));
-        handlerContext.setTargetPath(Paths.get(targetPath));
+        DefaultCompressContext handlerContext = new DefaultCompressContext();
+        handlerContext.sourcePaths(Arrays.asList(Paths.get(zipPath)));
+        handlerContext.targetPath(Paths.get(targetPath));
         handler.handle(handlerContext);
     }
 
@@ -45,10 +44,10 @@ public class JarArchiveHandlerTest {
 
         ArchiveHandler archiveHandler = new JarArchiveHandler();
 
-        DefaultArchiveContext handlerContext = new DefaultArchiveContext();
-        handlerContext.setSourcePaths(Arrays.asList(Paths.get(sourceDir)));
-        handlerContext.setTargetPath(Paths.get(targetPath));
-        handlerContext.setRelativePath(true);
+        DefaultCompressContext handlerContext = new DefaultCompressContext();
+        handlerContext.sourcePaths(Arrays.asList(Paths.get(sourceDir)));
+        handlerContext.targetPath(Paths.get(targetPath));
+        handlerContext.isRelativePath(true);
 
         archiveHandler.handle(handlerContext);
     }

@@ -1,6 +1,6 @@
 package com.github.houbb.compress.support.pipiline.init;
 
-import com.github.houbb.compress.handler.adaptor.HandlerAdaptor;
+import com.github.houbb.compress.handler.adaptor.CompressHandlerAdaptor;
 import com.github.houbb.compress.support.pipiline.HandlerPipeline;
 
 /**
@@ -10,7 +10,7 @@ import com.github.houbb.compress.support.pipiline.HandlerPipeline;
  * @author binbin.hou
  * @since 0.0.1
  */
-public abstract class AbstractHandlerInit extends HandlerAdaptor {
+public abstract class AbstractCompressHandlerInit extends CompressHandlerAdaptor {
 
     /**
      * 初始化 handler

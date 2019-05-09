@@ -1,6 +1,7 @@
 package com.github.houbb.compress.handler.archive;
 
 import com.github.houbb.compress.exception.CompressRuntimeException;
+import com.github.houbb.heaven.annotation.ThreadSafe;
 import org.apache.commons.compress.archivers.ArchiveEntry;
 import org.apache.commons.compress.archivers.ArchiveOutputStream;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
@@ -14,6 +15,7 @@ import java.io.FileOutputStream;
  * @author binbin.hou
  * @since 0.0.1
  */
+@ThreadSafe
 public class TarArchiveHandler extends AbstractArchiveHandler {
 
     @Override
