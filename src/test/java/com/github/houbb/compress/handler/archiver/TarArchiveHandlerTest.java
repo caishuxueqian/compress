@@ -4,8 +4,8 @@ import com.github.houbb.compress.context.impl.DefaultArchiveContext;
 import com.github.houbb.compress.context.impl.DefaultUnArchiveContext;
 import com.github.houbb.compress.handler.ArchiveHandler;
 import com.github.houbb.compress.handler.UnArchiveHandler;
-import com.github.houbb.compress.handler.impl.TarArchiveHandler;
-import com.github.houbb.compress.handler.impl.TarUnArchiveHandler;
+import com.github.houbb.compress.handler.archive.TarArchiveHandler;
+import com.github.houbb.compress.handler.archive.TarUnArchiveHandler;
 import org.junit.Test;
 
 import java.nio.file.Paths;

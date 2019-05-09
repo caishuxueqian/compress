@@ -1,4 +1,4 @@
-package com.github.houbb.compress.handler.impl;
+package com.github.houbb.compress.handler.archive;
 
 import com.github.houbb.compress.exception.CompressRuntimeException;
 import com.github.houbb.compress.handler.io.SevenZArchiveOutputStream;
@@ -15,7 +15,7 @@ import java.io.IOException;
  * [java压缩7z](https://www.jianshu.com/p/f982e797d753)
  * []()
  * @author binbin.hou
- * @since 1.0.0
+ * @since 0.0.1
  */
 public class ServenZArchiveHandler extends AbstractArchiveHandler {
     @Override

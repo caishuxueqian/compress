@@ -12,7 +12,7 @@ import java.io.IOException;
 /**
  * 目的：因为 {@link SevenZOutputFile} 这个类没有严格实现 {@link ArchiveOutputStream} 接口，使用组合的方式，使其保持接口的一致性。
  * @author binbin.hou
- * @since 1.0.0
+ * @since 0.0.1
  */
 public class SevenZArchiveInputStream extends ArchiveInputStream {
 

@@ -2,8 +2,8 @@ package com.github.houbb.compress.handler.archiver;
 
 import com.github.houbb.compress.context.impl.DefaultArchiveContext;
 import com.github.houbb.compress.context.impl.DefaultUnArchiveContext;
-import com.github.houbb.compress.handler.impl.ServenZArchiveHandler;
-import com.github.houbb.compress.handler.impl.ServenZUnArchiveHandler;
+import com.github.houbb.compress.handler.archive.ServenZArchiveHandler;
+import com.github.houbb.compress.handler.archive.ServenZUnArchiveHandler;
 import org.apache.commons.compress.archivers.sevenz.SevenZArchiveEntry;
 import org.apache.commons.compress.archivers.sevenz.SevenZOutputFile;
 import org.junit.Test;

@@ -16,7 +16,7 @@ import java.nio.file.Paths;
  *  正确的案例：
  * https://memorynotfound.com/java-7z-seven-zip-example-compress-decompress-file/
  * @author binbin.hou
- * @since 1.0.0
+ * @since 0.0.1
  */
 public class SevenZ {
 

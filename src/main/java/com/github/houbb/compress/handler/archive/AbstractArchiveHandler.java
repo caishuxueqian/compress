@@ -1,4 +1,4 @@
-package com.github.houbb.compress.handler.impl;
+package com.github.houbb.compress.handler.archive;
 
 import com.github.houbb.compress.context.ArchiveContext;
 import com.github.houbb.compress.context.IContext;
@@ -9,7 +9,6 @@ import com.github.houbb.compress.util.CompressFileUtil;
 import com.github.houbb.compress.util.PathUtil;
 import org.apache.commons.compress.archivers.ArchiveEntry;
 import org.apache.commons.compress.archivers.ArchiveOutputStream;
-import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,7 +19,7 @@ import java.util.List;
 
 /**
  * @author binbin.hou
- * @since 1.0.0
+ * @since 0.0.1
  */
 abstract class AbstractArchiveHandler extends ArchiveHandlerAdaptor {
 
