@@ -26,12 +26,4 @@ public class CompressRuntimeException extends RuntimeException{
         super(message, cause, enableSuppression, writableStackTrace);
     }
 
-    /**
-     * 重新抛出异常
-     * @param cause 原因
-     */
-    public static void rethrow(Throwable cause) {
-        throw new CompressRuntimeException(cause);
-    }
-
 }

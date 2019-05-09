@@ -4,7 +4,7 @@
 
     <groupId>com.github.houbb</groupId>
     <artifactId>compress</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
 
     <properties>
         <!--============================== All Plugins START ==============================-->
@@ -144,8 +144,8 @@
     </build>
 
     <!--============================== ADD For sonatype START ==============================-->
-    <name>heaven</name>
-    <description>Collect base useful tools for dev.</description>
+    <name>compress</name>
+    <description>The compress algorithm and archive tool for java.</description>
 
     <parent>
         <groupId>org.sonatype.oss</groupId>
@@ -160,8 +160,8 @@
         </license>
     </licenses>
     <scm>
-        <url>https://github.com/houbb/heaven</url>
-        <connection>https://github.com/houbb/heaven.git</connection>
+        <url>https://github.com/houbb/compress</url>
+        <connection>https://github.com/houbb/compress.git</connection>
         <developerConnection>https://houbb.github.io/</developerConnection>
     </scm>
     <developers>

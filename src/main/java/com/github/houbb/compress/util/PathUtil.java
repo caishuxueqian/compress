@@ -205,21 +205,4 @@ public class PathUtil {
         return result;
     }
 
-
-
-    public static void main(String[] args) {
-//        System.out.println(getParentPaths(Paths.get("/user/1243/ddd")));
-//        System.out.println(getPublicParentPath(Arrays.asList(Paths.get("/user/1243/ddd"),
-//                Paths.get("/user/1243/ddd/123"))));
-
-//        System.out.println(Paths.get("/user/1243/ddd"));
-//        System.out.println(Paths.get("/user/1243/ddd").relativize(Paths.get("\\user\\1243")));
-
-        System.out.println(getRelativePath(
-                Paths.get("/user/1243"),
-                Paths.get("/user/1243/ddd/123.txt")));
-
-        System.out.println("/user/1243/ddd/123.txt".indexOf("/user/1243"));
-    }
-
 }
