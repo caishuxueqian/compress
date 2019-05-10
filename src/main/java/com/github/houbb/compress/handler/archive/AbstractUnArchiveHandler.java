@@ -3,7 +3,6 @@ package com.github.houbb.compress.handler.archive;
 import com.github.houbb.compress.context.ICompressContext;
 import com.github.houbb.compress.exception.CompressRuntimeException;
 import com.github.houbb.compress.handler.adaptor.UnArchiveHandlerAdaptor;
-import com.github.houbb.compress.util.CompressFileUtil;
 import org.apache.commons.compress.archivers.ArchiveEntry;
 import org.apache.commons.compress.archivers.ArchiveInputStream;
 
@@ -42,7 +41,7 @@ abstract class AbstractUnArchiveHandler extends UnArchiveHandlerAdaptor {
                 // 处理文件夹
                 if (entry.isDirectory()) {
                     final File dir = buildFile(targetDir, entry);
-                    CompressFileUtil.makeDir(dir);
+                    dir.mkdirs();
                     entry = inputStream.getNextEntry();
                     continue;
                 }

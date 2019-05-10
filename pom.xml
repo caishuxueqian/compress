@@ -4,7 +4,7 @@
 
     <groupId>com.github.houbb</groupId>
     <artifactId>compress</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.2</version>
 
     <properties>
         <!--============================== All Plugins START ==============================-->
@@ -27,12 +27,11 @@
 
         <!--============================== INTER ==============================-->
         <plugin.gen.version>1.0.6</plugin.gen.version>
-        <heaven.version>0.0.5</heaven.version>
+        <heaven.version>0.0.6</heaven.version>
 
         <!--============================== OTHER ==============================-->
         <junit5.version>5.2.0</junit5.version>
         <junit.version>4.12</junit.version>
-        <apiguardian-api.version>1.0.0</apiguardian-api.version>
         <commons-compress.version>1.18</commons-compress.version>
         <xz.version>1.8</xz.version>
     </properties>
@@ -54,14 +53,8 @@
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
-                <scope>test</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>org.apiguardian</groupId>
-                <artifactId>apiguardian-api</artifactId>
-                <version>${apiguardian-api.version}</version>
                 <optional>true</optional>
+                <scope>test</scope>
             </dependency>
 
             <dependency>
@@ -90,11 +83,6 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apiguardian</groupId>
-            <artifactId>apiguardian-api</artifactId>
         </dependency>
 
         <dependency>

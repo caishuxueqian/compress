@@ -3,9 +3,9 @@ package com.github.houbb.compress.handler.archive;
 import com.github.houbb.compress.context.ICompressContext;
 import com.github.houbb.compress.exception.CompressRuntimeException;
 import com.github.houbb.compress.handler.adaptor.ArchiveHandlerAdaptor;
-import com.github.houbb.compress.support.filter.PathCondition;
-import com.github.houbb.compress.util.CompressFileUtil;
-import com.github.houbb.compress.util.PathUtil;
+import com.github.houbb.heaven.support.condition.ICondition;
+import com.github.houbb.heaven.util.nio.PathUtil;
+import com.github.houbb.heaven.util.util.CollectionUtil;
 import org.apache.commons.compress.archivers.ArchiveEntry;
 import org.apache.commons.compress.archivers.ArchiveOutputStream;
 
@@ -45,16 +45,6 @@ abstract class AbstractArchiveHandler extends ArchiveHandlerAdaptor {
     @Override
     public void handle(ICompressContext context) {
         this.doHandle(context);
-    }
-
-    /**
-     * 是否归档文件夹
-     * 1. jar 是不需要归档文件夹的。
-     * @return 是
-     */
-    @Deprecated
-    protected boolean archiveDir() {
-        return true;
     }
 
     /**
@@ -101,17 +91,19 @@ abstract class AbstractArchiveHandler extends ArchiveHandlerAdaptor {
         List<Path> resultPaths = new ArrayList<>();
         List<Path> allPaths = new ArrayList<>();
         for(Path path : pathList) {
-            allPaths.addAll(CompressFileUtil.getPathList(path));
+            allPaths.addAll(PathUtil.getPathList(path));
         }
 
         //1. 排序一下，文件夹放在前面。文件放在后面，不然会出现先创建建文件，再创建文件夹的错误问题。
-        List<Path> dirList = PathUtil.getConditionList(allPaths, new PathCondition() {
+        //TODO: 实际对于 jar 好像这么做也没有用。后期优化掉。
+        List<Path> dirList = CollectionUtil.conditionList(allPaths, new ICondition<Path>() {
             @Override
             public boolean condition(Path path) {
                 return Files.isDirectory(path);
             }
         });
-        List<Path> fileList = PathUtil.getConditionList(allPaths, new PathCondition() {
+
+        List<Path> fileList = CollectionUtil.conditionList(allPaths, new ICondition<Path>() {
             @Override
             public boolean condition(Path path) {
                 return path.toFile().isFile();

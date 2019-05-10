@@ -1,6 +1,5 @@
 package com.github.houbb.compress.handler.adaptor;
 
-import com.github.houbb.compress.annotation.CommonEager;
 import com.github.houbb.compress.context.ICompressContext;
 import com.github.houbb.compress.handler.ICompressHandler;
 
@@ -10,7 +9,6 @@ import com.github.houbb.compress.handler.ICompressHandler;
  * @author binbin.hou
  * @since 0.0.1
  */
-@CommonEager
 public class CompressHandlerAdaptor implements ICompressHandler {
     @Override
     public void handle(ICompressContext context) {
