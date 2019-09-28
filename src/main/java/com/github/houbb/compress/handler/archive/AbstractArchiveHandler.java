@@ -60,11 +60,12 @@ abstract class AbstractArchiveHandler extends ArchiveHandlerAdaptor {
 
         try(ArchiveOutputStream outputStream = this.getArchiveOutputStream(targetFile, password)){
             // 循环添加 entry 进入归档
+            ArchiveEntry entry = null;
             for(Path path : pathList) {
                 // 文件
                 File fileToArchive = path.toFile();
                 final String entryName = getEntryName(publicParentPath, fileToArchive, context);
-                final ArchiveEntry entry = getArchiveEntry(outputStream, fileToArchive, entryName);
+                entry = getArchiveEntry(outputStream, fileToArchive, entryName);
 
                 if(Files.isDirectory(path)) {
                     outputStream.putArchiveEntry(entry);
@@ -76,7 +77,10 @@ abstract class AbstractArchiveHandler extends ArchiveHandlerAdaptor {
                     //ignore
                 }
             }
-            outputStream.closeArchiveEntry();
+            // 判空关闭处理 @since 0.0.3
+            if(entry != null) {
+                outputStream.closeArchiveEntry();
+            }
         } catch (IOException e) {
             throw new CompressRuntimeException(e);
         }

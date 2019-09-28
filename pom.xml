@@ -27,7 +27,7 @@
 
         <!--============================== INTER ==============================-->
         <plugin.gen.version>1.0.6</plugin.gen.version>
-        <heaven.version>0.0.6</heaven.version>
+        <heaven.version>0.1.28</heaven.version>
 
         <!--============================== OTHER ==============================-->
         <junit5.version>5.2.0</junit5.version>

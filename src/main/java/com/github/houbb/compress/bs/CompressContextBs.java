@@ -1,5 +1,6 @@
-package com.github.houbb.compress.context;
+package com.github.houbb.compress.bs;
 
+import com.github.houbb.compress.context.ICompressContext;
 import com.github.houbb.compress.exception.CompressRuntimeException;
 import com.github.houbb.heaven.annotation.NotThreadSafe;
 import com.github.houbb.heaven.util.lang.StringUtil;
@@ -17,7 +18,7 @@ import java.util.List;
  * @since 0.0.1
  */
 @NotThreadSafe
-public class CompressContextBootstrap implements ICompressContext {
+public class CompressContextBs implements ICompressContext {
 
     /**
      * 原始文件
@@ -52,16 +53,23 @@ public class CompressContextBootstrap implements ICompressContext {
      */
     private boolean isRelativePath = true;
 
-    private CompressContextBootstrap(){}
+    private CompressContextBs(){}
+
+    /**
+     * 创建新实例
+     * @return this
+     */
+    public static CompressContextBs newInstance() {
+        return new CompressContextBs();
+    }
 
     /**
      * @param sourcePaths 待处理文件路径
      * @return  引导类本身
      */
-    public static CompressContextBootstrap source(String ... sourcePaths) {
-        CompressContextBootstrap bootstrap = new CompressContextBootstrap();
-        bootstrap.sources(sourcePaths);
-        return bootstrap;
+    public CompressContextBs source(String ... sourcePaths) {
+        this.sources(sourcePaths);
+        return this;
     }
 
     /**
@@ -69,7 +77,7 @@ public class CompressContextBootstrap implements ICompressContext {
      * @param targetPath 目标路径
      * @return  引导类本身
      */
-    public CompressContextBootstrap target(final String targetPath) {
+    public CompressContextBs target(final String targetPath) {
         //1. 待处理文件路径禁止为空。
         if(StringUtil.isEmpty(targetPath)) {
             throw new CompressRuntimeException("Target path not allow empty!");
@@ -86,7 +94,7 @@ public class CompressContextBootstrap implements ICompressContext {
      * @param isRelativePath 是否使用相对路径
      * @return 引导类本身
      */
-    public CompressContextBootstrap isRelativePath(final boolean isRelativePath) {
+    public CompressContextBs isRelativePath(final boolean isRelativePath) {
         this.isRelativePath = isRelativePath;
         return this;
     }
@@ -97,7 +105,7 @@ public class CompressContextBootstrap implements ICompressContext {
      * @param password 密码
      * @return 引导类本身
      */
-    public CompressContextBootstrap password(final String password) {
+    public CompressContextBs password(final String password) {
         this.password = password;
         return this;
     }
@@ -135,7 +143,7 @@ public class CompressContextBootstrap implements ICompressContext {
      * @param sourcePaths 待处理文件路径
      * @return  引导类本身
      */
-    private CompressContextBootstrap sources(String ... sourcePaths) {
+    private CompressContextBs sources(String ... sourcePaths) {
         //1. 待处理文件路径禁止为空。
         if(ArrayUtil.isEmpty(sourcePaths)) {
             throw new CompressRuntimeException("Source paths not allow empty!");
