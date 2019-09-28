@@ -6,12 +6,19 @@ The compress algorithm tool.(常见压缩算法工具类)
 [![Build Status](https://www.travis-ci.org/houbb/compress.svg?branch=master)](https://www.travis-ci.org/houbb/compress?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/houbb/compress/badge.svg?branch=master)](https://coveralls.io/github/houbb/compress?branch=master)
 
+## 创作背景
+
+压缩是很常见的一个需求，但是使用 apache 的工具类进行压缩，需要自己处理很多事情。
+
+比如文件是否存在，不存在则需要创建，还要循环处理各种信息，这一点也不优雅。
+
+于是，就基于 apache common-compress 进行封装，便于后期使用。
+
 ## 特性
 
-- 支持常见归档压缩算法。
+- 支持常见归档压缩算法
 
 - fluent api 设计，优雅方便
-
 
 # 快速开始
 
