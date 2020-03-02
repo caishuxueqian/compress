@@ -1,6 +1,6 @@
 package com.github.houbb.compress.handler.archive;
 
-import com.github.houbb.compress.context.ICompressContext;
+import com.github.houbb.compress.api.ICompressContext;
 import com.github.houbb.compress.exception.CompressRuntimeException;
 import com.github.houbb.compress.handler.adaptor.ArchiveHandlerAdaptor;
 import com.github.houbb.heaven.support.condition.ICondition;

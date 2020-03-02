@@ -1,6 +1,6 @@
 package com.github.houbb.compress.handler.adaptor;
 
-import com.github.houbb.compress.context.ICompressContext;
+import com.github.houbb.compress.api.ICompressContext;
 import com.github.houbb.compress.handler.ICompressHandler;
 
 /**

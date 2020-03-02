@@ -1,9 +1,9 @@
 package com.github.houbb.compress.bs;
 
 import com.github.houbb.compress.api.ICompress;
+import com.github.houbb.compress.api.ICompressContext;
 import com.github.houbb.compress.api.impl.Compress;
 import com.github.houbb.compress.constant.enums.CompressTypeEnum;
-import com.github.houbb.compress.context.ICompressContext;
 import com.github.houbb.heaven.support.instance.impl.Instances;
 import com.github.houbb.heaven.util.common.ArgUtil;
 

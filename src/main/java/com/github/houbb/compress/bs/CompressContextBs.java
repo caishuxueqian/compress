@@ -1,7 +1,7 @@
 package com.github.houbb.compress.bs;
 
+import com.github.houbb.compress.api.ICompressContext;
 import com.github.houbb.compress.constant.enums.CompressTypeEnum;
-import com.github.houbb.compress.context.ICompressContext;
 import com.github.houbb.compress.exception.CompressRuntimeException;
 import com.github.houbb.heaven.annotation.NotThreadSafe;
 import com.github.houbb.heaven.util.lang.StringUtil;

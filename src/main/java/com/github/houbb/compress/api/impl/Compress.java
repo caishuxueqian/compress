@@ -1,7 +1,7 @@
 package com.github.houbb.compress.api.impl;
 
 import com.github.houbb.compress.api.ICompress;
-import com.github.houbb.compress.context.ICompressContext;
+import com.github.houbb.compress.api.ICompressContext;
 import com.github.houbb.compress.handler.factory.CompressFactory;
 import com.github.houbb.compress.handler.factory.UnCompressFactory;
 import com.github.houbb.heaven.annotation.ThreadSafe;

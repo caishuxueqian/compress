@@ -1,7 +1,5 @@
 package com.github.houbb.compress.api;
 
-import com.github.houbb.compress.context.ICompressContext;
-
 /**
  * <p> project: compress-ICompress </p>
  * <p> create on 2020/3/2 21:04 </p>
