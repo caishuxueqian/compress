@@ -1,13 +1,10 @@
 package com.github.houbb.compress.handler.archive;
 
-import com.github.houbb.compress.exception.CompressRuntimeException;
 import com.github.houbb.heaven.annotation.ThreadSafe;
 import org.apache.commons.compress.archivers.ArchiveInputStream;
 import org.apache.commons.compress.archivers.jar.JarArchiveInputStream;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 /**
  * @author binbin.hou
@@ -17,12 +14,8 @@ import java.io.FileNotFoundException;
 public class JarUnArchiveHandler extends AbstractUnArchiveHandler {
 
     @Override
-    protected ArchiveInputStream getArchiveInputStream(File sourceFile, String password) {
-        try {
-            return new JarArchiveInputStream(new FileInputStream(sourceFile));
-        } catch (FileNotFoundException e) {
-            throw new CompressRuntimeException(e);
-        }
+    protected ArchiveInputStream getArchiveInputStream(InputStream inputStream, String password) {
+        return new JarArchiveInputStream(inputStream);
     }
 
 }

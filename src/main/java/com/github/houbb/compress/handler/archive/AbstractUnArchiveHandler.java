@@ -2,27 +2,30 @@ package com.github.houbb.compress.handler.archive;
 
 import com.github.houbb.compress.api.ICompressContext;
 import com.github.houbb.compress.exception.CompressRuntimeException;
-import com.github.houbb.compress.handler.adaptor.UnArchiveHandlerAdaptor;
+import com.github.houbb.compress.handler.adaptor.CompressHandlerAdaptor;
+import com.github.houbb.compress.handler.adaptor.UnCompressHandlerAdaptor;
+import com.sun.corba.se.spi.orbutil.fsm.Input;
 import org.apache.commons.compress.archivers.ArchiveEntry;
 import org.apache.commons.compress.archivers.ArchiveInputStream;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * @author binbin.hou
  * @since 0.0.1
  */
-abstract class AbstractUnArchiveHandler extends UnArchiveHandlerAdaptor {
+abstract class AbstractUnArchiveHandler extends UnCompressHandlerAdaptor {
 
     /**
      * 获取文件输入流
-     * @param sourceFile 原始文件
+     * @param sourceStream 文件流
      * @param password 密码
      * @return 输入流
      */
-    protected abstract ArchiveInputStream getArchiveInputStream(final File sourceFile,
+    protected abstract ArchiveInputStream getArchiveInputStream(final InputStream sourceStream,
                                                                 final String password);
 
     /**
@@ -41,11 +44,11 @@ abstract class AbstractUnArchiveHandler extends UnArchiveHandlerAdaptor {
     }
 
     protected void doHandler(final ICompressContext context) {
-        final File sourceFile = context.sourcePathFirst().toFile();
+        final InputStream sourceStream = context.uncompressStream();
         final File targetDir = context.targetPath().toFile();
         final String password = context.password();
 
-        try(ArchiveInputStream inputStream = getArchiveInputStream(sourceFile, password)) {
+        try(ArchiveInputStream inputStream = getArchiveInputStream(sourceStream, password)) {
             ArchiveEntry entry = inputStream.getNextEntry();
             while (entry != null) {
                 // 处理文件夹

@@ -1,4 +1,4 @@
-package com.github.houbb.compress.handler.compressor;
+package com.github.houbb.compress.handler.compress;
 
 import com.github.houbb.compress.handler.adaptor.UnCompressHandlerAdaptor;
 

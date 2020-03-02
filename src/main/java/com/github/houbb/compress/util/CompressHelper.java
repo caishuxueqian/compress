@@ -2,9 +2,16 @@ package com.github.houbb.compress.util;
 
 import com.github.houbb.compress.bs.CompressBs;
 import com.github.houbb.compress.constant.enums.CompressTypeEnum;
+import com.github.houbb.compress.exception.CompressRuntimeException;
 import com.github.houbb.heaven.constant.PunctuationConst;
 import com.github.houbb.heaven.util.common.ArgUtil;
 import com.github.houbb.heaven.util.io.FileUtil;
+import com.github.houbb.heaven.util.io.StreamUtil;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * <p> project: compress-CompressHelper </p>
@@ -64,7 +71,7 @@ public final class CompressHelper {
         ArgUtil.notEmpty(source, "source");
         ArgUtil.notEmpty(target, "target");
 
-        CompressBs.newInstance(compressTypeEnum).source(source).target(target).compress();
+        CompressBs.newInstance(compressTypeEnum).compressSources(source).target(target).compress();
     }
 
     /**
@@ -82,7 +89,36 @@ public final class CompressHelper {
         ArgUtil.notEmpty(source, "source");
         ArgUtil.notEmpty(targetDir, "target");
 
-        CompressBs.newInstance(compressTypeEnum).source(source).target(targetDir).uncompress();
+        try (InputStream inputStream = new FileInputStream(source)) {
+            uncompress(compressTypeEnum, inputStream, targetDir);
+        } catch (IOException e) {
+            throw new CompressRuntimeException(e);
+        }
+    }
+
+    /**
+     * 执行文件解压
+     *
+     * @param compressTypeEnum 压缩类型
+     * @param sourceStream     原始文件流
+     * @param targetDir        目标文件夹路径
+     * @since 0.0.4
+     */
+    public static void uncompress(final CompressTypeEnum compressTypeEnum,
+                                  final InputStream sourceStream,
+                                  final String targetDir) {
+        ArgUtil.notNull(compressTypeEnum, "compressTypeEnum");
+        ArgUtil.notNull(sourceStream, "sourceStream");
+        ArgUtil.notEmpty(targetDir, "target");
+
+        try {
+            CompressBs.newInstance(compressTypeEnum)
+                    .uncompressStream(sourceStream)
+                    .target(targetDir)
+                    .uncompress();
+        } finally {
+            StreamUtil.closeStream(sourceStream);
+        }
     }
 
     /**

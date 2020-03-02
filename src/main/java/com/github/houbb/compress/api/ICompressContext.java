@@ -1,7 +1,9 @@
 package com.github.houbb.compress.api;
 
 import com.github.houbb.compress.constant.enums.CompressTypeEnum;
+import com.sun.corba.se.spi.orbutil.fsm.Input;
 
+import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -13,10 +15,17 @@ import java.util.List;
 public interface ICompressContext {
 
     /**
+     * 文件解压流
+     * @return 解压流
+     * @since 0.0.5
+     */
+    InputStream uncompressStream();
+
+    /**
      * 原始文件 path 列表
      * @return path 列表
      */
-    List<Path> sourcePaths();
+    List<Path> compressSources();
 
     /**
      * 获取第一个原始文件 path

@@ -8,6 +8,7 @@ import com.github.houbb.heaven.util.lang.StringUtil;
 import com.github.houbb.heaven.util.util.ArrayUtil;
 import com.github.houbb.heaven.util.util.CollectionUtil;
 
+import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class CompressContextBs implements ICompressContext {
      * 1. 允许指定多个文件。
      * 2. 允许重复
      */
-    private List<Path> sourcePaths = new ArrayList<>();
+    private List<Path> compressSources = new ArrayList<>();
 
     /**
      * 目标文件路径
@@ -60,6 +61,12 @@ public class CompressContextBs implements ICompressContext {
      */
     private CompressTypeEnum compressType = CompressTypeEnum.ZIP;
 
+    /**
+     * 解压流信息
+     * @since 0.0.5
+     */
+    private InputStream uncompressStream;
+
     private CompressContextBs(){}
 
     /**
@@ -74,8 +81,8 @@ public class CompressContextBs implements ICompressContext {
      * @param sourcePaths 待处理文件路径
      * @return  引导类本身
      */
-    public CompressContextBs source(String ... sourcePaths) {
-        this.sources(sourcePaths);
+    public CompressContextBs compressSources(String ... sourcePaths) {
+        this.innerCompressSources(sourcePaths);
         return this;
     }
 
@@ -119,16 +126,26 @@ public class CompressContextBs implements ICompressContext {
 
 
     @Override
-    public List<Path> sourcePaths() {
-        return this.sourcePaths;
+    public InputStream uncompressStream() {
+        return uncompressStream;
+    }
+
+    public CompressContextBs uncompressStream(InputStream uncompressStream) {
+        this.uncompressStream = uncompressStream;
+        return this;
+    }
+
+    @Override
+    public List<Path> compressSources() {
+        return this.compressSources;
     }
 
     @Override
     public Path sourcePathFirst() {
-        if(CollectionUtil.isEmpty(sourcePaths)) {
+        if(CollectionUtil.isEmpty(compressSources)) {
             return null;
         }
-        return sourcePaths.get(0);
+        return compressSources.get(0);
     }
 
     @Override
@@ -160,7 +177,7 @@ public class CompressContextBs implements ICompressContext {
      * @param sourcePaths 待处理文件路径
      * @return  引导类本身
      */
-    private CompressContextBs sources(String ... sourcePaths) {
+    private CompressContextBs innerCompressSources(String ... sourcePaths) {
         //1. 待处理文件路径禁止为空。
         if(ArrayUtil.isEmpty(sourcePaths)) {
             throw new CompressRuntimeException("Source paths not allow empty!");
@@ -168,7 +185,7 @@ public class CompressContextBs implements ICompressContext {
 
         //2. 添加文件路径信息
         for(String source : sourcePaths) {
-            this.sourcePaths.add(Paths.get(source));
+            this.compressSources.add(Paths.get(source));
         }
 
         return this;

@@ -7,6 +7,8 @@ import com.github.houbb.compress.constant.enums.CompressTypeEnum;
 import com.github.houbb.heaven.support.instance.impl.Instances;
 import com.github.houbb.heaven.util.common.ArgUtil;
 
+import java.io.InputStream;
+
 /**
  * 压缩引导类
  * @author binbin.hou
@@ -23,10 +25,10 @@ public final class CompressBs {
     private CompressTypeEnum compressType;
 
     /**
-     * 原始文件
+     * 压缩原始文件
      * @since 0.0.4
      */
-    private String[] sourcePaths;
+    private String[] compressSources;
 
     /**
      * 目标文件路径
@@ -51,6 +53,12 @@ public final class CompressBs {
      * @since 0.0.4
      */
     private ICompress compress = Instances.singleton(Compress.class);
+
+    /**
+     * 解压流
+     * @since 0.0.5
+     */
+    private InputStream uncompressStream;
 
     /**
      * 指定压缩算法
@@ -83,10 +91,23 @@ public final class CompressBs {
      * @return this
      * @since 0.0.1
      */
-    public CompressBs source(String ...sources) {
+    public CompressBs compressSources(String ...sources) {
         ArgUtil.notEmpty(sources, "sources");
 
-        this.sourcePaths = sources;
+        this.compressSources = sources;
+        return this;
+    }
+
+    /**
+     * 设置解压缩文件流
+     * @param uncompressStream 解压文件流
+     * @return this
+     * @since 0.0.5
+     */
+    public CompressBs uncompressStream(InputStream uncompressStream) {
+        ArgUtil.notNull(uncompressStream, "uncompressStream");
+
+        this.uncompressStream = uncompressStream;
         return this;
     }
 
@@ -140,7 +161,8 @@ public final class CompressBs {
      * @since 0.0.1
      */
     public void uncompress() {
-        final ICompressContext context = buildCompressContextBs();
+        final CompressContextBs context = buildCompressContextBs();
+        context.uncompressStream();
         compress.uncompress(context);
     }
 
@@ -152,10 +174,12 @@ public final class CompressBs {
     private CompressContextBs buildCompressContextBs() {
         return CompressContextBs.newInstance()
                 .isRelativePath(relativePath)
-                .source(sourcePaths)
+                .compressSources(compressSources)
                 .target(target)
                 .compressType(compressType)
-                .password(password);
+                .password(password)
+                .uncompressStream(uncompressStream)
+                ;
     }
 
 }

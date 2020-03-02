@@ -2,6 +2,7 @@ package com.github.houbb.compress.handler.factory;
 
 import com.github.houbb.compress.constant.enums.CompressTypeEnum;
 import com.github.houbb.compress.handler.ICompressHandler;
+import com.github.houbb.compress.handler.UnCompressHandler;
 import com.github.houbb.compress.handler.archive.JarUnArchiveHandler;
 import com.github.houbb.compress.handler.archive.ServenZUnArchiveHandler;
 import com.github.houbb.compress.handler.archive.TarUnArchiveHandler;
@@ -23,7 +24,7 @@ public final class UnCompressFactory {
      * 解压缩 map
      * @since 0.0.3
      */
-    private static final Map<CompressTypeEnum, ICompressHandler> UNCOMPRESS_MAP = new EnumMap<>(CompressTypeEnum.class);
+    private static final Map<CompressTypeEnum, UnCompressHandler> UNCOMPRESS_MAP = new EnumMap<>(CompressTypeEnum.class);
 
     static {
         UNCOMPRESS_MAP.put(CompressTypeEnum.JAR, new JarUnArchiveHandler());
@@ -38,7 +39,7 @@ public final class UnCompressFactory {
      * @return 结果
      * @since 0.0.3
      */
-    public static ICompressHandler getHandler(final CompressTypeEnum compressTypeEnum) {
+    public static UnCompressHandler getHandler(final CompressTypeEnum compressTypeEnum) {
         return UNCOMPRESS_MAP.get(compressTypeEnum);
     }
 

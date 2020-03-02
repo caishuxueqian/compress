@@ -5,6 +5,7 @@ import com.github.houbb.compress.constant.enums.CompressTypeEnum;
 import com.github.houbb.heaven.annotation.NotThreadSafe;
 import com.github.houbb.heaven.util.util.CollectionUtil;
 
+import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -15,6 +16,12 @@ import java.util.List;
  */
 @NotThreadSafe
 public class CompressContext implements ICompressContext {
+
+    /**
+     * 解压文件流
+     * @since 0.0.5
+     */
+    private InputStream uncompressStream;
 
     /**
      * 是否使用相对路径进行归档
@@ -43,12 +50,28 @@ public class CompressContext implements ICompressContext {
     private CompressTypeEnum compressType;
 
     /**
+     * 是否需要创建文件
+     * @since 0.0.5
+     */
+    private boolean createFile;
+
+    /**
      * 新建对象
      * @return 对象
      * @since 0.0.4
      */
     public static CompressContext newInstance() {
         return new CompressContext();
+    }
+
+    @Override
+    public InputStream uncompressStream() {
+        return uncompressStream;
+    }
+
+    public CompressContext uncompressStream(InputStream uncompressStream) {
+        this.uncompressStream = uncompressStream;
+        return this;
     }
 
     @Override
@@ -72,7 +95,7 @@ public class CompressContext implements ICompressContext {
     }
 
     @Override
-    public List<Path> sourcePaths() {
+    public List<Path> compressSources() {
         return sourcePaths;
     }
 
@@ -116,4 +139,5 @@ public class CompressContext implements ICompressContext {
         this.compressType = compressType;
         return this;
     }
+
 }

@@ -22,7 +22,7 @@ public class CompressBsTest {
         String target = "C:\\Users\\binbin.hou\\Desktop\\1.zip";
 
         CompressBs.newInstance(CompressTypeEnum.ZIP)
-                .source(source)
+                .compressSources(source)
                 .target(target)
                 .compress();
     }
@@ -37,7 +37,7 @@ public class CompressBsTest {
         String target = "C:\\Users\\binbin.hou\\Desktop\\";
 
         CompressBs.newInstance(CompressTypeEnum.ZIP)
-                .source(source)
+                .compressSources(source)
                 .target(target)
                 .uncompress();
     }
@@ -51,7 +51,7 @@ public class CompressBsTest {
         // 指定加密策略
         CompressBs.newInstance(CompressTypeEnum.ZIP)
                 // 指定源文件
-                .source("")
+                .compressSources("")
                 // 指定目标文件（夹）
                 .target("")
                 // 指定密码，默认无。

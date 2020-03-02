@@ -2,7 +2,7 @@ package com.github.houbb.compress.handler.archive;
 
 import com.github.houbb.compress.api.ICompressContext;
 import com.github.houbb.compress.exception.CompressRuntimeException;
-import com.github.houbb.compress.handler.adaptor.ArchiveHandlerAdaptor;
+import com.github.houbb.compress.handler.adaptor.CompressHandlerAdaptor;
 import com.github.houbb.heaven.support.condition.ICondition;
 import com.github.houbb.heaven.util.nio.PathUtil;
 import com.github.houbb.heaven.util.util.CollectionUtil;
@@ -20,7 +20,7 @@ import java.util.List;
  * @author binbin.hou
  * @since 0.0.1
  */
-abstract class AbstractArchiveHandler extends ArchiveHandlerAdaptor {
+abstract class AbstractArchiveHandler extends CompressHandlerAdaptor {
 
     /**
      * 执行归档
@@ -54,8 +54,8 @@ abstract class AbstractArchiveHandler extends ArchiveHandlerAdaptor {
     protected void doHandle(final ICompressContext context) {
         // 基础信息
         final File targetFile = context.targetPath().toFile();
-        final List<Path> pathList = buildAllPaths(context.sourcePaths());
-        final Path publicParentPath = PathUtil.getPublicParentPath(context.sourcePaths());
+        final List<Path> pathList = buildAllPaths(context.compressSources());
+        final Path publicParentPath = PathUtil.getPublicParentPath(context.compressSources());
         final String password = context.password();
 
         try(ArchiveOutputStream outputStream = this.getArchiveOutputStream(targetFile, password)){
