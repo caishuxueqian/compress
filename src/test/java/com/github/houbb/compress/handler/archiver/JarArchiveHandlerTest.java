@@ -1,6 +1,6 @@
 package com.github.houbb.compress.handler.archiver;
 
-import com.github.houbb.compress.context.impl.DefaultCompressContext;
+import com.github.houbb.compress.api.impl.CompressContext;
 import com.github.houbb.compress.handler.ArchiveHandler;
 import com.github.houbb.compress.handler.UnArchiveHandler;
 import com.github.houbb.compress.handler.archive.JarArchiveHandler;
@@ -28,7 +28,7 @@ public class JarArchiveHandlerTest {
 
         UnArchiveHandler handler = new JarUnArchiveHandler();
 
-        DefaultCompressContext handlerContext = new DefaultCompressContext();
+        CompressContext handlerContext = new CompressContext();
         handlerContext.sourcePaths(Arrays.asList(Paths.get(zipPath)));
         handlerContext.targetPath(Paths.get(targetPath));
         handler.handle(handlerContext);
@@ -44,7 +44,7 @@ public class JarArchiveHandlerTest {
 
         ArchiveHandler archiveHandler = new JarArchiveHandler();
 
-        DefaultCompressContext handlerContext = new DefaultCompressContext();
+        CompressContext handlerContext = new CompressContext();
         handlerContext.sourcePaths(Arrays.asList(Paths.get(sourceDir)));
         handlerContext.targetPath(Paths.get(targetPath));
         handlerContext.isRelativePath(true);

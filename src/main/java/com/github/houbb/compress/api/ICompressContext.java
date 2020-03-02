@@ -1,4 +1,6 @@
-package com.github.houbb.compress.context;
+package com.github.houbb.compress.api;
+
+import com.github.houbb.compress.constant.enums.CompressTypeEnum;
 
 import java.nio.file.Path;
 import java.util.List;
@@ -41,5 +43,12 @@ public interface ICompressContext {
      * @return 是否
      */
     boolean isRelativePath();
+
+    /**
+     * 压缩类型
+     * @return 压缩类型
+     * @since 0.0.4
+     */
+    CompressTypeEnum compressType();
 
 }

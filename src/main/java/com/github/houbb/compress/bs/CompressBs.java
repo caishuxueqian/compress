@@ -1,8 +1,10 @@
 package com.github.houbb.compress.bs;
 
-import com.github.houbb.compress.constant.CompressTypeEnum;
-import com.github.houbb.compress.handler.factory.CompressFactory;
-import com.github.houbb.compress.handler.factory.UnCompressFactory;
+import com.github.houbb.compress.api.ICompress;
+import com.github.houbb.compress.api.impl.Compress;
+import com.github.houbb.compress.constant.enums.CompressTypeEnum;
+import com.github.houbb.compress.context.ICompressContext;
+import com.github.houbb.heaven.support.instance.impl.Instances;
 import com.github.houbb.heaven.util.common.ArgUtil;
 
 /**
@@ -18,43 +20,73 @@ public final class CompressBs {
      * 压缩算法类型
      * @since 0.0.3
      */
-    private CompressTypeEnum compressTypeEnum;
+    private CompressTypeEnum compressType;
 
     /**
-     * 压缩上下文引导类
-     * @since 0.0.3
+     * 原始文件
+     * @since 0.0.4
      */
-    private CompressContextBs compressContextBs = CompressContextBs.newInstance();
+    private String[] sourcePaths;
+
+    /**
+     * 目标文件路径
+     * @since 0.0.4
+     */
+    private String target;
+
+    /**
+     * 加密密码
+     * @since 0.0.4
+     */
+    private String password = null;
+
+    /**
+     * 是否使用相对路径
+     * @since 0.0.4
+     */
+    private boolean relativePath = true;
+
+    /**
+     * 压缩类实现
+     * @since 0.0.4
+     */
+    private ICompress compress = Instances.singleton(Compress.class);
 
     /**
      * 指定压缩算法
      * @param compressTypeEnum 压缩算法类型
      * @return this
+     * @since 0.0.1
      */
     public static CompressBs newInstance(final CompressTypeEnum compressTypeEnum) {
         CompressBs compressBs = new CompressBs();
-        return compressBs.compressTypeEnum(compressTypeEnum);
+        compressBs.compressType = compressTypeEnum;
+        return compressBs;
     }
 
     /**
      * 指定压缩类型
      * @param compressTypeEnum 压缩类型
      * @return this
+     * @since 0.0.1
      */
-    private CompressBs compressTypeEnum(final CompressTypeEnum compressTypeEnum) {
+    private CompressBs compressType(final CompressTypeEnum compressTypeEnum) {
         ArgUtil.notNull(compressTypeEnum, "compressTypeEnum");
-        this.compressTypeEnum = compressTypeEnum;
+
+        this.compressType = compressTypeEnum;
         return this;
     }
 
     /**
      * 指定原始文件路径
-     * @param source 原始文件路径
+     * @param sources 原始文件路径
      * @return this
+     * @since 0.0.1
      */
-    public CompressBs source(String source) {
-        ArgUtil.notEmpty(source, "source");
-        compressContextBs.source(source);
+    public CompressBs source(String ...sources) {
+        ArgUtil.notEmpty(sources, "sources");
+
+        this.sourcePaths = sources;
         return this;
     }
 
@@ -62,10 +94,12 @@ public final class CompressBs {
      * 指定目标文件路径
      * @param target 目标文件路径
      * @return this
+     * @since 0.0.1
      */
     public CompressBs target(String target) {
         ArgUtil.notEmpty(target, "target");
-        compressContextBs.target(target);
+
+        this.target = target;
         return this;
     }
 
@@ -73,10 +107,12 @@ public final class CompressBs {
      * 指定密码
      * @param password 密码
      * @return this
+     * @since 0.0.1
      */
     public CompressBs password(String password) {
         ArgUtil.notEmpty(password, "password");
-        compressContextBs.password(password);
+
+        this.password = password;
         return this;
     }
 
@@ -86,22 +122,40 @@ public final class CompressBs {
      * @return this
      */
     public CompressBs relativePath(boolean relativePath) {
-        compressContextBs.isRelativePath(relativePath);
+        this.relativePath = relativePath;
         return this;
     }
 
     /**
      * 压缩
+     * @since 0.0.1
      */
     public void compress() {
-        CompressFactory.getHandler(this.compressTypeEnum).handle(this.compressContextBs);
+        final ICompressContext context = buildCompressContextBs();
+        compress.compress(context);
     }
 
     /**
      * 解压缩
+     * @since 0.0.1
      */
     public void uncompress() {
-        UnCompressFactory.getHandler(this.compressTypeEnum).handle(this.compressContextBs);
+        final ICompressContext context = buildCompressContextBs();
+        compress.uncompress(context);
+    }
+
+    /**
+     * 构建压缩上下文引导类
+     * @return 引导类
+     * @since 0.0.4
+     */
+    private CompressContextBs buildCompressContextBs() {
+        return CompressContextBs.newInstance()
+                .isRelativePath(relativePath)
+                .source(sourcePaths)
+                .target(target)
+                .compressType(compressType)
+                .password(password);
     }
 
 }

@@ -4,7 +4,7 @@
 
     <groupId>com.github.houbb</groupId>
     <artifactId>compress</artifactId>
-    <version>0.0.4-SNAPSHOT</version>
+    <version>0.0.4</version>
 
     <properties>
         <!--============================== All Plugins START ==============================-->
@@ -27,16 +27,13 @@
 
         <!--============================== INTER ==============================-->
         <plugin.gen.version>1.0.6</plugin.gen.version>
-        <heaven.version>0.1.28</heaven.version>
+        <heaven.version>0.1.86</heaven.version>
 
         <!--============================== OTHER ==============================-->
-        <junit5.version>5.2.0</junit5.version>
         <junit.version>4.12</junit.version>
         <commons-compress.version>1.18</commons-compress.version>
         <xz.version>1.8</xz.version>
     </properties>
-
-
 
     <dependencyManagement>
 

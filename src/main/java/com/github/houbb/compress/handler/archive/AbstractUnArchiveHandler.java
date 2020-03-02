@@ -25,6 +25,16 @@ abstract class AbstractUnArchiveHandler extends UnArchiveHandlerAdaptor {
     protected abstract ArchiveInputStream getArchiveInputStream(final File sourceFile,
                                                                 final String password);
 
+    /**
+     * 获取 entry 的大小
+     * @param entry 压缩明细
+     * @return 结果
+     * @since 0.0.4
+     */
+    protected int getEntrySize(final ArchiveEntry entry) {
+        return (int) entry.getSize();
+    }
+
     @Override
     public void handle(final ICompressContext context) {
         this.doHandler(context);
@@ -51,7 +61,9 @@ abstract class AbstractUnArchiveHandler extends UnArchiveHandlerAdaptor {
                 final File file = buildFile(targetDir, entry);
                 file.getParentFile().mkdirs();
                 try(FileOutputStream out = new FileOutputStream(file)) {
-                    byte[] content = new byte[(int) entry.getSize()];
+                    final int entrySize = getEntrySize(entry);
+                    //TODO: 这里这种写法可能存在问题。
+                    byte[] content = new byte[entrySize];
                     inputStream.read(content, 0, content.length);
                     out.write(content);
                 }

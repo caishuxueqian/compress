@@ -1,6 +1,6 @@
 package com.github.houbb.compress.handler.factory;
 
-import com.github.houbb.compress.constant.CompressTypeEnum;
+import com.github.houbb.compress.constant.enums.CompressTypeEnum;
 import com.github.houbb.compress.handler.ICompressHandler;
 import com.github.houbb.compress.handler.archive.JarArchiveHandler;
 import com.github.houbb.compress.handler.archive.ServenZArchiveHandler;

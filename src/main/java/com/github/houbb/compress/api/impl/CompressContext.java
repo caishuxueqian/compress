@@ -1,6 +1,8 @@
-package com.github.houbb.compress.context.impl;
+package com.github.houbb.compress.api.impl;
 
-import com.github.houbb.compress.context.ICompressContext;
+import com.github.houbb.compress.api.ICompressContext;
+import com.github.houbb.compress.constant.enums.CompressTypeEnum;
+import com.github.houbb.heaven.annotation.NotThreadSafe;
 import com.github.houbb.heaven.util.util.CollectionUtil;
 
 import java.nio.file.Path;
@@ -11,7 +13,8 @@ import java.util.List;
  * @author binbin.hou
  * @since 0.0.1
  */
-public class DefaultCompressContext implements ICompressContext {
+@NotThreadSafe
+public class CompressContext implements ICompressContext {
 
     /**
      * 是否使用相对路径进行归档
@@ -33,6 +36,21 @@ public class DefaultCompressContext implements ICompressContext {
      */
     private String password;
 
+    /**
+     * 压缩类型
+     * @since 0.0.4
+     */
+    private CompressTypeEnum compressType;
+
+    /**
+     * 新建对象
+     * @return 对象
+     * @since 0.0.4
+     */
+    public static CompressContext newInstance() {
+        return new CompressContext();
+    }
+
     @Override
     public boolean isRelativePath() {
         return isRelativePath;
@@ -43,12 +61,12 @@ public class DefaultCompressContext implements ICompressContext {
      * @param relativePath 相对路径
      * @return 本身
      */
-    public DefaultCompressContext isRelativePath(boolean relativePath) {
+    public CompressContext isRelativePath(boolean relativePath) {
         isRelativePath = relativePath;
         return this;
     }
 
-    public DefaultCompressContext sourcePaths(List<Path> sourcePaths) {
+    public CompressContext sourcePaths(List<Path> sourcePaths) {
         this.sourcePaths = sourcePaths;
         return this;
     }
@@ -68,7 +86,7 @@ public class DefaultCompressContext implements ICompressContext {
     }
 
 
-    public DefaultCompressContext targetPath(Path targetPath) {
+    public CompressContext targetPath(Path targetPath) {
         this.targetPath = targetPath;
         return this;
     }
@@ -79,7 +97,7 @@ public class DefaultCompressContext implements ICompressContext {
         return targetPath;
     }
 
-    public DefaultCompressContext password(String password) {
+    public CompressContext password(String password) {
         this.password = password;
         return this;
     }
@@ -89,4 +107,13 @@ public class DefaultCompressContext implements ICompressContext {
         return password;
     }
 
+    @Override
+    public CompressTypeEnum compressType() {
+        return compressType;
+    }
+
+    public CompressContext compressType(CompressTypeEnum compressType) {
+        this.compressType = compressType;
+        return this;
+    }
 }

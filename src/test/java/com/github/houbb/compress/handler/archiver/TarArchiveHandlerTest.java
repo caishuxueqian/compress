@@ -1,6 +1,6 @@
 package com.github.houbb.compress.handler.archiver;
 
-import com.github.houbb.compress.context.impl.DefaultCompressContext;
+import com.github.houbb.compress.api.impl.CompressContext;
 import com.github.houbb.compress.handler.ArchiveHandler;
 import com.github.houbb.compress.handler.UnArchiveHandler;
 import com.github.houbb.compress.handler.archive.TarArchiveHandler;
@@ -28,7 +28,7 @@ public class TarArchiveHandlerTest {
 
         UnArchiveHandler handler = new TarUnArchiveHandler();
 
-        DefaultCompressContext handlerContext = new DefaultCompressContext();
+        CompressContext handlerContext = new CompressContext();
         handlerContext.sourcePaths(Arrays.asList(Paths.get(zipPath)));
         handlerContext.targetPath(Paths.get(targetPath));
         handler.handle(handlerContext);
@@ -44,7 +44,7 @@ public class TarArchiveHandlerTest {
 
         ArchiveHandler archiveHandler = new TarArchiveHandler();
 
-        DefaultCompressContext handlerContext = new DefaultCompressContext();
+        CompressContext handlerContext = new CompressContext();
         handlerContext.sourcePaths(Arrays.asList(Paths.get(sourceDir)));
         handlerContext.targetPath(Paths.get(targetPath));
         handlerContext.isRelativePath(true);
@@ -62,7 +62,7 @@ public class TarArchiveHandlerTest {
 
         ArchiveHandler archiveHandler = new TarArchiveHandler();
 
-        DefaultCompressContext handlerContext = new DefaultCompressContext();
+        CompressContext handlerContext = new CompressContext();
         handlerContext.sourcePaths(Arrays.asList(Paths.get(sourceDir)));
         handlerContext.targetPath(Paths.get(targetPath));
         handlerContext.isRelativePath(false);

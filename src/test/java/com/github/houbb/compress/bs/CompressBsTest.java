@@ -1,7 +1,6 @@
-package com.github.houbb.compress.core;
+package com.github.houbb.compress.bs;
 
-import com.github.houbb.compress.bs.CompressBs;
-import com.github.houbb.compress.constant.CompressTypeEnum;
+import com.github.houbb.compress.constant.enums.CompressTypeEnum;
 import org.junit.Ignore;
 import org.junit.Test;
 

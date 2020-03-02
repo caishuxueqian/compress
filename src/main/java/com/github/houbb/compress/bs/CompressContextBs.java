@@ -1,5 +1,6 @@
 package com.github.houbb.compress.bs;
 
+import com.github.houbb.compress.constant.enums.CompressTypeEnum;
 import com.github.houbb.compress.context.ICompressContext;
 import com.github.houbb.compress.exception.CompressRuntimeException;
 import com.github.houbb.heaven.annotation.NotThreadSafe;
@@ -52,6 +53,12 @@ public class CompressContextBs implements ICompressContext {
      * 1. 默认为真
      */
     private boolean isRelativePath = true;
+
+    /**
+     * 压缩算法
+     * @since 0.0.4
+     */
+    private CompressTypeEnum compressType = CompressTypeEnum.ZIP;
 
     private CompressContextBs(){}
 
@@ -137,6 +144,16 @@ public class CompressContextBs implements ICompressContext {
     @Override
     public boolean isRelativePath() {
         return isRelativePath;
+    }
+
+    @Override
+    public CompressTypeEnum compressType() {
+        return compressType;
+    }
+
+    public CompressContextBs compressType(CompressTypeEnum compressType) {
+        this.compressType = compressType;
+        return this;
     }
 
     /**

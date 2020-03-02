@@ -1,6 +1,6 @@
 package com.github.houbb.compress.handler;
 
-import com.github.houbb.compress.context.ICompressContext;
+import com.github.houbb.compress.api.ICompressContext;
 
 /**
  * @author binbin.hou

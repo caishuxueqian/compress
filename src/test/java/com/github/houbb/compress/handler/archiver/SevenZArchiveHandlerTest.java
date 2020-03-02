@@ -1,6 +1,6 @@
 package com.github.houbb.compress.handler.archiver;
 
-import com.github.houbb.compress.context.impl.DefaultCompressContext;
+import com.github.houbb.compress.api.impl.CompressContext;
 import com.github.houbb.compress.handler.archive.ServenZArchiveHandler;
 import com.github.houbb.compress.handler.archive.ServenZUnArchiveHandler;
 import org.apache.commons.compress.archivers.sevenz.SevenZArchiveEntry;
@@ -26,7 +26,7 @@ public class SevenZArchiveHandlerTest {
         final String sourcePath = "C:\\Users\\binbin.hou\\Desktop\\1.txt";
         final String targetPath = "C:\\Users\\binbin.hou\\Desktop\\7zFileRelative.7z";
 
-        DefaultCompressContext context = new DefaultCompressContext();
+        CompressContext context = new CompressContext();
         context.sourcePaths(Arrays.asList(Paths.get(sourcePath)));
         context.targetPath(Paths.get(targetPath));
         context.isRelativePath(true);
@@ -39,7 +39,7 @@ public class SevenZArchiveHandlerTest {
         final String targetPath = "C:\\Users\\binbin.hou\\Desktop\\notRelativeDir.7z";
         final String sourcePath = "C:\\Users\\binbin.hou\\Desktop\\1";
 
-        DefaultCompressContext context = new DefaultCompressContext();
+        CompressContext context = new CompressContext();
         context.sourcePaths(Arrays.asList(Paths.get(sourcePath)));
         context.targetPath(Paths.get(targetPath));
         context.isRelativePath(false);
@@ -52,7 +52,7 @@ public class SevenZArchiveHandlerTest {
         final String targetPath = "C:\\Users\\binbin.hou\\Desktop\\7z";
         final String sourcePath = "C:\\Users\\binbin.hou\\Desktop\\1.7z";
 
-        DefaultCompressContext context = new DefaultCompressContext();
+        CompressContext context = new CompressContext();
         context.sourcePaths(Arrays.asList(Paths.get(sourcePath)));
         context.targetPath(Paths.get(targetPath));
         new ServenZUnArchiveHandler().handle(context);
