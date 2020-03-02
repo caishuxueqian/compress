@@ -17,7 +17,7 @@ public interface ICompress {
      * @since 0.0.4
      * @return 返回压缩的文件信息
      */
-    File compress(final ICompressContext compressContext);
+    ICompressResult compress(final ICompressContext compressContext);
 
     /**
      * 解压缩

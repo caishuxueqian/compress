@@ -1,8 +1,6 @@
 package com.github.houbb.compress.handler.archiver;
 
 import com.github.houbb.compress.api.impl.CompressContext;
-import com.github.houbb.compress.handler.ArchiveHandler;
-import com.github.houbb.compress.handler.UnArchiveHandler;
 import com.github.houbb.compress.handler.archive.ZipArchiveHandler;
 import com.github.houbb.compress.handler.archive.ZipUnArchiveHandler;
 import org.junit.Ignore;
@@ -26,7 +24,7 @@ public class ZipArchiveHandlerTest {
         final String zipPath = "C:\\Users\\binbin.hou\\Desktop\\1.zip";
         final String targetPath = "C:\\Users\\binbin.hou\\Desktop\\zip\\";
 
-        UnArchiveHandler handler = new ZipUnArchiveHandler();
+        ZipUnArchiveHandler handler = new ZipUnArchiveHandler();
 
         CompressContext handlerContext = new CompressContext();
         handlerContext.sourcePaths(Arrays.asList(Paths.get(zipPath)));
@@ -42,7 +40,7 @@ public class ZipArchiveHandlerTest {
         final String sourceDir = "C:\\Users\\binbin.hou\\Desktop\\zip\\";
         final String targetPath = "C:\\Users\\binbin.hou\\Desktop\\zip\\1.zip";
 
-        ArchiveHandler archiveHandler = new ZipArchiveHandler();
+        ZipArchiveHandler archiveHandler = new ZipArchiveHandler();
 
         CompressContext handlerContext = new CompressContext();
         handlerContext.sourcePaths(Arrays.asList(Paths.get(sourceDir)));

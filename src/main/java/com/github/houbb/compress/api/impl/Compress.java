@@ -2,9 +2,12 @@ package com.github.houbb.compress.api.impl;
 
 import com.github.houbb.compress.api.ICompress;
 import com.github.houbb.compress.api.ICompressContext;
+import com.github.houbb.compress.api.ICompressResult;
 import com.github.houbb.compress.handler.factory.CompressFactory;
 import com.github.houbb.compress.handler.factory.UnCompressFactory;
 import com.github.houbb.heaven.annotation.ThreadSafe;
+
+import java.io.File;
 
 /**
  * <p> project: compress-ICompress </p>
@@ -17,8 +20,8 @@ import com.github.houbb.heaven.annotation.ThreadSafe;
 public class Compress implements ICompress {
 
     @Override
-    public void compress(ICompressContext compressContext) {
-        CompressFactory.getHandler(compressContext.compressType()).handle(compressContext);
+    public ICompressResult compress(ICompressContext compressContext) {
+        return CompressFactory.getHandler(compressContext.compressType()).handle(compressContext);
     }
 
     @Override

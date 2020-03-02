@@ -140,4 +140,13 @@ public class CompressContext implements ICompressContext {
         return this;
     }
 
+    @Override
+    public boolean createFile() {
+        return createFile;
+    }
+
+    public CompressContext createFile(boolean createFile) {
+        this.createFile = createFile;
+        return this;
+    }
 }

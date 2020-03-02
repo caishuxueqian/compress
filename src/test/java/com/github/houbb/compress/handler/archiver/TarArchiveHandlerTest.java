@@ -1,8 +1,6 @@
 package com.github.houbb.compress.handler.archiver;
 
 import com.github.houbb.compress.api.impl.CompressContext;
-import com.github.houbb.compress.handler.ArchiveHandler;
-import com.github.houbb.compress.handler.UnArchiveHandler;
 import com.github.houbb.compress.handler.archive.TarArchiveHandler;
 import com.github.houbb.compress.handler.archive.TarUnArchiveHandler;
 import org.junit.Ignore;
@@ -26,7 +24,7 @@ public class TarArchiveHandlerTest {
         final String zipPath = "C:\\Users\\binbin.hou\\Desktop\\2.tar";
         final String targetPath = "C:\\Users\\binbin.hou\\Desktop\\";
 
-        UnArchiveHandler handler = new TarUnArchiveHandler();
+        TarUnArchiveHandler handler = new TarUnArchiveHandler();
 
         CompressContext handlerContext = new CompressContext();
         handlerContext.sourcePaths(Arrays.asList(Paths.get(zipPath)));
@@ -42,7 +40,7 @@ public class TarArchiveHandlerTest {
         final String targetPath = "C:\\Users\\binbin.hou\\Desktop\\1.tar";
         final String sourceDir = "C:\\Users\\binbin.hou\\Desktop\\1\\";
 
-        ArchiveHandler archiveHandler = new TarArchiveHandler();
+        TarArchiveHandler archiveHandler = new TarArchiveHandler();
 
         CompressContext handlerContext = new CompressContext();
         handlerContext.sourcePaths(Arrays.asList(Paths.get(sourceDir)));
@@ -60,7 +58,7 @@ public class TarArchiveHandlerTest {
         final String targetPath = "C:\\Users\\binbin.hou\\Desktop\\2.tar";
         final String sourceDir = "C:\\Users\\binbin.hou\\Desktop\\1\\";
 
-        ArchiveHandler archiveHandler = new TarArchiveHandler();
+        TarArchiveHandler archiveHandler = new TarArchiveHandler();
 
         CompressContext handlerContext = new CompressContext();
         handlerContext.sourcePaths(Arrays.asList(Paths.get(sourceDir)));

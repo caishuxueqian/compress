@@ -1,8 +1,10 @@
 package com.github.houbb.compress.handler.archive;
 
 import com.github.houbb.compress.api.ICompressContext;
+import com.github.houbb.compress.api.ICompressResult;
+import com.github.houbb.compress.api.impl.CompressResult;
 import com.github.houbb.compress.exception.CompressRuntimeException;
-import com.github.houbb.compress.handler.adaptor.CompressHandlerAdaptor;
+import com.github.houbb.compress.handler.ICompressHandler;
 import com.github.houbb.heaven.support.condition.ICondition;
 import com.github.houbb.heaven.util.nio.PathUtil;
 import com.github.houbb.heaven.util.util.CollectionUtil;
@@ -20,7 +22,7 @@ import java.util.List;
  * @author binbin.hou
  * @since 0.0.1
  */
-abstract class AbstractArchiveHandler extends CompressHandlerAdaptor {
+abstract class AbstractArchiveHandler implements ICompressHandler {
 
     /**
      * 执行归档
@@ -43,15 +45,15 @@ abstract class AbstractArchiveHandler extends CompressHandlerAdaptor {
 
 
     @Override
-    public void handle(ICompressContext context) {
-        this.doHandle(context);
+    public ICompressResult handle(ICompressContext context) {
+        return this.doHandle(context);
     }
 
     /**
      * 默认的实现方式
      * @param context 上下文
      */
-    protected void doHandle(final ICompressContext context) {
+    protected ICompressResult doHandle(final ICompressContext context) {
         // 基础信息
         final File targetFile = context.targetPath().toFile();
         final List<Path> pathList = buildAllPaths(context.compressSources());
@@ -81,6 +83,12 @@ abstract class AbstractArchiveHandler extends CompressHandlerAdaptor {
             if(entry != null) {
                 outputStream.closeArchiveEntry();
             }
+
+            // TODO: 是否写入？或者可以临走时进行文件的删除
+            if(!context.createFile()) {
+                targetFile.deleteOnExit();
+            }
+            return CompressResult.newInstance().file(targetFile);
         } catch (IOException e) {
             throw new CompressRuntimeException(e);
         }

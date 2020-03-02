@@ -2,11 +2,13 @@ package com.github.houbb.compress.bs;
 
 import com.github.houbb.compress.api.ICompress;
 import com.github.houbb.compress.api.ICompressContext;
+import com.github.houbb.compress.api.ICompressResult;
 import com.github.houbb.compress.api.impl.Compress;
 import com.github.houbb.compress.constant.enums.CompressTypeEnum;
 import com.github.houbb.heaven.support.instance.impl.Instances;
 import com.github.houbb.heaven.util.common.ArgUtil;
 
+import java.io.File;
 import java.io.InputStream;
 
 /**
@@ -47,6 +49,12 @@ public final class CompressBs {
      * @since 0.0.4
      */
     private boolean relativePath = true;
+
+    /**
+     * 是否需要创建文件
+     * @since 0.0.5
+     */
+    private boolean createFile = true;
 
     /**
      * 压缩类实现
@@ -148,12 +156,23 @@ public final class CompressBs {
     }
 
     /**
+     * 设置是否创建文件
+     * @param createFile 是否
+     * @return this
+     * @since 0.0.5
+     */
+    public CompressBs createFile(boolean createFile) {
+        this.createFile = createFile;
+        return this;
+    }
+
+    /**
      * 压缩
      * @since 0.0.1
      */
-    public void compress() {
+    public ICompressResult compress() {
         final ICompressContext context = buildCompressContextBs();
-        compress.compress(context);
+        return compress.compress(context);
     }
 
     /**
@@ -179,6 +198,7 @@ public final class CompressBs {
                 .compressType(compressType)
                 .password(password)
                 .uncompressStream(uncompressStream)
+                .createFile(createFile)
                 ;
     }
 

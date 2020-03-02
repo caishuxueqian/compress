@@ -1,6 +1,7 @@
 package com.github.houbb.compress.handler;
 
 import com.github.houbb.compress.api.ICompressContext;
+import com.github.houbb.compress.api.ICompressResult;
 
 /**
  * @author binbin.hou
@@ -11,7 +12,8 @@ public interface ICompressHandler {
     /**
      * 执行上下文
      * @param context 上下文
+     * @return 压缩文件信息
      */
-    void handle(final ICompressContext context);
+    ICompressResult handle(final ICompressContext context);
 
 }

@@ -2,9 +2,7 @@ package com.github.houbb.compress.handler.archive;
 
 import com.github.houbb.compress.api.ICompressContext;
 import com.github.houbb.compress.exception.CompressRuntimeException;
-import com.github.houbb.compress.handler.adaptor.CompressHandlerAdaptor;
-import com.github.houbb.compress.handler.adaptor.UnCompressHandlerAdaptor;
-import com.sun.corba.se.spi.orbutil.fsm.Input;
+import com.github.houbb.compress.handler.IUnCompressHandler;
 import org.apache.commons.compress.archivers.ArchiveEntry;
 import org.apache.commons.compress.archivers.ArchiveInputStream;
 
@@ -17,7 +15,7 @@ import java.io.InputStream;
  * @author binbin.hou
  * @since 0.0.1
  */
-abstract class AbstractUnArchiveHandler extends UnCompressHandlerAdaptor {
+abstract class AbstractUnArchiveHandler implements IUnCompressHandler {
 
     /**
      * 获取文件输入流
@@ -70,6 +68,9 @@ abstract class AbstractUnArchiveHandler extends UnCompressHandlerAdaptor {
                     inputStream.read(content, 0, content.length);
                     out.write(content);
                 }
+
+                // 可否返回 targetDir+entryName+bytes[] 信息？
+                // 这些作为一个对象，避免对于文件的创建。
                 entry = inputStream.getNextEntry();
             }
         } catch (IOException e) {

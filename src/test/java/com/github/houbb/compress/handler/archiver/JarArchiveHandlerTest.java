@@ -1,8 +1,6 @@
 package com.github.houbb.compress.handler.archiver;
 
 import com.github.houbb.compress.api.impl.CompressContext;
-import com.github.houbb.compress.handler.ArchiveHandler;
-import com.github.houbb.compress.handler.UnArchiveHandler;
 import com.github.houbb.compress.handler.archive.JarArchiveHandler;
 import com.github.houbb.compress.handler.archive.JarUnArchiveHandler;
 import org.junit.Ignore;
@@ -26,7 +24,7 @@ public class JarArchiveHandlerTest {
         final String zipPath = "C:\\Users\\binbin.hou\\Desktop\\1.jar";
         final String targetPath = "C:\\Users\\binbin.hou\\Desktop\\jar";
 
-        UnArchiveHandler handler = new JarUnArchiveHandler();
+        JarUnArchiveHandler handler = new JarUnArchiveHandler();
 
         CompressContext handlerContext = new CompressContext();
         handlerContext.sourcePaths(Arrays.asList(Paths.get(zipPath)));
@@ -42,7 +40,7 @@ public class JarArchiveHandlerTest {
         final String sourceDir = "C:\\Users\\binbin.hou\\Desktop\\1\\";
         final String targetPath = "C:\\Users\\binbin.hou\\Desktop\\1.jar";
 
-        ArchiveHandler archiveHandler = new JarArchiveHandler();
+        JarArchiveHandler archiveHandler = new JarArchiveHandler();
 
         CompressContext handlerContext = new CompressContext();
         handlerContext.sourcePaths(Arrays.asList(Paths.get(sourceDir)));

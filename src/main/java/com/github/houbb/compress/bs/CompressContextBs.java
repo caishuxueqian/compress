@@ -67,6 +67,12 @@ public class CompressContextBs implements ICompressContext {
      */
     private InputStream uncompressStream;
 
+    /**
+     * 是否需要创建文件
+     * @since 0.0.5
+     */
+    private boolean createFile;
+
     private CompressContextBs(){}
 
     /**
@@ -188,6 +194,16 @@ public class CompressContextBs implements ICompressContext {
             this.compressSources.add(Paths.get(source));
         }
 
+        return this;
+    }
+
+    @Override
+    public boolean createFile() {
+        return createFile;
+    }
+
+    public CompressContextBs createFile(boolean createFile) {
+        this.createFile = createFile;
         return this;
     }
 }

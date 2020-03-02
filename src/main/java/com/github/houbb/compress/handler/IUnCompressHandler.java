@@ -7,7 +7,7 @@ import com.github.houbb.compress.api.ICompressContext;
  * @author binbin.hou
  * @since 0.0.1
  */
-public interface UnCompressHandler {
+public interface IUnCompressHandler {
 
     /**
      * 执行上下文

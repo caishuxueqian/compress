@@ -1,7 +1,6 @@
 package com.github.houbb.compress.api;
 
 import com.github.houbb.compress.constant.enums.CompressTypeEnum;
-import com.sun.corba.se.spi.orbutil.fsm.Input;
 
 import java.io.InputStream;
 import java.nio.file.Path;
@@ -59,5 +58,12 @@ public interface ICompressContext {
      * @since 0.0.4
      */
     CompressTypeEnum compressType();
+
+    /**
+     * 是否创建文件
+     * @return 是否创建文件
+     * @since 0.0.5
+     */
+    boolean createFile();
 
 }
