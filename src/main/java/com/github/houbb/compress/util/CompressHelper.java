@@ -120,18 +120,7 @@ public final class CompressHelper {
     public static IUncompressResult uncompress(final CompressTypeEnum compressTypeEnum,
                                   final InputStream sourceStream,
                                   final String targetDir) {
-        ArgUtil.notNull(compressTypeEnum, "compressTypeEnum");
-        ArgUtil.notNull(sourceStream, "sourceStream");
-        ArgUtil.notEmpty(targetDir, "target");
-
-        try {
-            return CompressBs.newInstance(compressTypeEnum)
-                    .uncompressStream(sourceStream)
-                    .target(targetDir)
-                    .uncompress(UncompressResultHandlers.defaults());
-        } finally {
-            StreamUtil.closeStream(sourceStream);
-        }
+        return uncompress(compressTypeEnum, sourceStream, targetDir, true);
     }
 
     /**
@@ -160,6 +149,35 @@ public final class CompressHelper {
     public static IUncompressResult uncompress(final String source) {
         final String targetDir = FileUtil.getDirPath(source);
         return uncompress(source, targetDir);
+    }
+
+    /**
+     * 执行文件解压
+     *
+     * @param compressTypeEnum 压缩类型
+     * @param sourceStream     原始文件流
+     * @param targetDir        目标文件夹路径
+     * @param createFile 创建文件
+     * @return 结果
+     * @since 0.0.6
+     */
+    public static IUncompressResult uncompress(final CompressTypeEnum compressTypeEnum,
+                                               final InputStream sourceStream,
+                                               final String targetDir,
+                                               final boolean createFile) {
+        ArgUtil.notNull(compressTypeEnum, "compressTypeEnum");
+        ArgUtil.notNull(sourceStream, "sourceStream");
+        ArgUtil.notEmpty(targetDir, "target");
+
+        try {
+            return CompressBs.newInstance(compressTypeEnum)
+                    .uncompressStream(sourceStream)
+                    .target(targetDir)
+                    .createFile(createFile)
+                    .uncompress(UncompressResultHandlers.defaults());
+        } finally {
+            StreamUtil.closeStream(sourceStream);
+        }
     }
 
 }

@@ -7,14 +7,12 @@ import com.github.houbb.compress.exception.CompressRuntimeException;
 import com.github.houbb.compress.handler.IUncompressHandler;
 import com.github.houbb.compress.support.file.IFileInfo;
 import com.github.houbb.compress.support.file.impl.FileInfo;
+import com.github.houbb.heaven.annotation.CommonEager;
 import com.github.houbb.heaven.util.guava.Guavas;
 import org.apache.commons.compress.archivers.ArchiveEntry;
 import org.apache.commons.compress.archivers.ArchiveInputStream;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.List;
 
 /**
@@ -78,20 +76,14 @@ abstract class AbstractUnArchiveHandler implements IUncompressHandler {
                     fileInfo.directory(true);
                 } else {
                     // 处理文件
-                    final int entrySize = getEntrySize(entry);
-                    byte[] content = new byte[entrySize];
-                    //这里读取可能不准，后续可以修正
-                    int readCount = 0;
-                    while (readCount < entrySize && readCount != -1) {
-                        readCount += inputStream.read(content, readCount, entrySize - readCount);
-                    }
-                    fileInfo.content(content);
+                    byte[] bytes = inputStreamToBytes(inputStream);
+                    fileInfo.content(bytes);
 
                     if(createFile) {
                         final File file = new File(path);
                         file.getParentFile().mkdirs();
                         try(FileOutputStream out = new FileOutputStream(file)) {
-                            out.write(content);
+                            out.write(bytes);
                         }
                     }
                 }
@@ -109,16 +101,24 @@ abstract class AbstractUnArchiveHandler implements IUncompressHandler {
     }
 
     /**
-     * 构建目标文件
-     * @param targetDir 目标文件夹
-     * @param entry 明细
-     * @return 结果
-     * @since 0.0.1
+     * 输入流转为字节流
+     * @param inputStream 输入流
+     * @return 字节数组
+     * @since 0.0.5
      */
-    @Deprecated
-    private File buildFile(final File targetDir, final ArchiveEntry entry) {
-        final String path = buildFilePath(targetDir, entry);
-        return new File(path);
+    @CommonEager
+    public static byte[] inputStreamToBytes(final InputStream inputStream) {
+        try(ByteArrayOutputStream output = new ByteArrayOutputStream()) {
+            byte[] buffer = new byte[1024];
+            int n = 0;
+            while (-1 != (n = inputStream.read(buffer))) {
+                output.write(buffer, 0, n);
+            }
+
+            return output.toByteArray();
+        } catch (IOException e) {
+            throw new CompressRuntimeException(e);
+        }
     }
 
     /**

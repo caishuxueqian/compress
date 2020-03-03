@@ -75,8 +75,8 @@ public final class CompressHelperTest {
 
     @Test
     public void uncompressNotCreateFileTest() throws FileNotFoundException, UnsupportedEncodingException {
-        final String s = "D:\\github\\compress\\src\\test\\resources\\compress_enum_s_t.zip";
-        final String t = "D:\\github\\compress\\src\\test\\resources\\un\\";
+        final String s = "D:\\_github\\compress\\src\\test\\resources\\resources.zip";
+        final String t = "D:\\_github\\compress\\src\\test\\resources\\";
 
         IUncompressResult result = CompressBs.newInstance(CompressTypeEnum.ZIP)
                 .target(t)
@@ -85,7 +85,9 @@ public final class CompressHelperTest {
                 .uncompress(UncompressResultHandlers.defaults());
 
         String string = new String(result.fileInfos().get(0).content());
+        String string2 = new String(result.fileInfos().get(1).content());
         System.out.println(string);
+        System.out.println(string2);
     }
 
     @Test
