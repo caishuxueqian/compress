@@ -1,6 +1,6 @@
 # compress
 
-The compress algorithm tool.(常见压缩算法工具类)
+The [compress](https://github.com/houbb/compress) algorithm tool.(常见压缩算法工具类)
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.houbb/compress/badge.svg)](http://mvnrepository.com/artifact/com.github.houbb/compress)
 [![Build Status](https://www.travis-ci.org/houbb/compress.svg?branch=master)](https://www.travis-ci.org/houbb/compress?branch=master)
@@ -16,9 +16,15 @@ The compress algorithm tool.(常见压缩算法工具类)
 
 ## 特性
 
+- fluent api 设计，优雅灵活
+
+- 极简的工具类 API 设计，一行代码搞定
+
 - 支持常见归档压缩算法
 
-- fluent api 设计，优雅方便
+- 返回压缩文件字节信息
+
+- 返回解压文件字节信息
 
 # 快速开始
 
@@ -34,48 +40,33 @@ Maven 3.x+
 <dependency>
     <groupId>com.github.houbb</groupId>
     <artifactId>compress</artifactId>
-    <version>0.0.3</version>
+    <version>0.0.5</version>
 </dependency>
 ```
 
-## 入门例子
-
-所有测试代码，都可以在 test 模块下找到。
-
-### 压缩
+## 压缩
 
 将 source 路径的文件，压缩为 target 文件。
 
-指定压缩方式为 ZIP。
+默认压缩方式为 ZIP。
 
 ```java
-public void compressTest() {
-    String source = "C:\\Users\\binbin.hou\\Desktop\\1.txt";
-    String target = "C:\\Users\\binbin.hou\\Desktop\\1.zip";
-
-    CompressBs.newInstance(CompressTypeEnum.ZIP)
-            .source(source)
-            .target(target)
-            .compress();
-}
+final String s = "D:\\github\\compress\\src\\test\\resources\\compress_s.txt";
+CompressHelper.compress(s);
 ```
 
-### 解压缩
+## 解压缩
 
 将 source 路径的文件，解压缩到 target 路径下。
 
-指定解压缩方式为 ZIP。
+默认根据压缩文件后缀自动选择算法。
+
+默认位置为压缩文件所在文件夹下。
 
 ```java
-public void uncompressTest() {
-    String source = "C:\\Users\\binbin.hou\\Desktop\\1.zip";
-    String target = "C:\\Users\\binbin.hou\\Desktop\\";
+final String s = "D:\\github\\compress\\src\\test\\resources\\compress_s.zip";
 
-    CompressBs.newInstance(CompressTypeEnum.ZIP)
-            .source(source)
-            .target(target)
-            .uncompress();
-}
+CompressHelper.uncompress(s);
 ```
 
 # 支持的压缩算法
@@ -108,28 +99,5 @@ public enum CompressTypeEnum {
     TAR,
     ;
 
-}
-```
-
-# 配置测试
-
-`CompressBs` 引导类还支持更加丰富的属性配置。
-
-使用起来也非常简单方便，如下：
-
-```java
-public void configTest() {
-    // 指定加密策略
-    CompressBs.newInstance(CompressTypeEnum.ZIP)
-            // 指定源文件
-            .source("")
-            // 指定目标文件（夹）
-            .target("")
-            // 指定密码，默认无。
-            .password("")
-            // 是否使用相对路径进行处理
-            .relativePath(false)
-            // 指定解压或者压缩
-            .compress();
 }
 ```

@@ -81,7 +81,10 @@ abstract class AbstractUnArchiveHandler implements IUncompressHandler {
                     final int entrySize = getEntrySize(entry);
                     byte[] content = new byte[entrySize];
                     //这里读取可能不准，后续可以修正
-                    inputStream.read(content, 0, entrySize);
+                    int readCount = 0;
+                    while (readCount < entrySize && readCount != -1) {
+                        readCount += inputStream.read(content, readCount, entrySize - readCount);
+                    }
                     fileInfo.content(content);
 
                     if(createFile) {

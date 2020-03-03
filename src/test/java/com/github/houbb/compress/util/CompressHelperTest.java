@@ -99,7 +99,6 @@ public final class CompressHelperTest {
     @Test
     public void uncompress3Test() {
         final String s = "D:\\_github\\compress\\src\\test\\resources\\compress_s.zip";
-
         CompressHelper.uncompress(s);
     }
 
