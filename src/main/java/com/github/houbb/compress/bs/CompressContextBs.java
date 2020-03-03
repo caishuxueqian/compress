@@ -6,7 +6,6 @@ import com.github.houbb.compress.exception.CompressRuntimeException;
 import com.github.houbb.heaven.annotation.NotThreadSafe;
 import com.github.houbb.heaven.util.lang.StringUtil;
 import com.github.houbb.heaven.util.util.ArrayUtil;
-import com.github.houbb.heaven.util.util.CollectionUtil;
 
 import java.io.InputStream;
 import java.nio.file.Path;
@@ -53,7 +52,7 @@ public class CompressContextBs implements ICompressContext {
      * 是否使用相对路径
      * 1. 默认为真
      */
-    private boolean isRelativePath = true;
+    private boolean relativePath = true;
 
     /**
      * 压缩算法
@@ -114,8 +113,8 @@ public class CompressContextBs implements ICompressContext {
      * @param isRelativePath 是否使用相对路径
      * @return 引导类本身
      */
-    public CompressContextBs isRelativePath(final boolean isRelativePath) {
-        this.isRelativePath = isRelativePath;
+    public CompressContextBs relativePath(final boolean isRelativePath) {
+        this.relativePath = isRelativePath;
         return this;
     }
 
@@ -147,14 +146,6 @@ public class CompressContextBs implements ICompressContext {
     }
 
     @Override
-    public Path sourcePathFirst() {
-        if(CollectionUtil.isEmpty(compressSources)) {
-            return null;
-        }
-        return compressSources.get(0);
-    }
-
-    @Override
     public Path targetPath() {
         return this.targetPath;
     }
@@ -165,8 +156,8 @@ public class CompressContextBs implements ICompressContext {
     }
 
     @Override
-    public boolean isRelativePath() {
-        return isRelativePath;
+    public boolean relativePath() {
+        return relativePath;
     }
 
     @Override

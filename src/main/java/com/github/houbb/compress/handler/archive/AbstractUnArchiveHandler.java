@@ -1,8 +1,9 @@
 package com.github.houbb.compress.handler.archive;
 
 import com.github.houbb.compress.api.ICompressContext;
+import com.github.houbb.compress.api.IUncompressResult;
 import com.github.houbb.compress.exception.CompressRuntimeException;
-import com.github.houbb.compress.handler.IUnCompressHandler;
+import com.github.houbb.compress.handler.IUncompressHandler;
 import org.apache.commons.compress.archivers.ArchiveEntry;
 import org.apache.commons.compress.archivers.ArchiveInputStream;
 
@@ -15,7 +16,7 @@ import java.io.InputStream;
  * @author binbin.hou
  * @since 0.0.1
  */
-abstract class AbstractUnArchiveHandler implements IUnCompressHandler {
+abstract class AbstractUnArchiveHandler implements IUncompressHandler {
 
     /**
      * 获取文件输入流
@@ -37,11 +38,11 @@ abstract class AbstractUnArchiveHandler implements IUnCompressHandler {
     }
 
     @Override
-    public void handle(final ICompressContext context) {
-        this.doHandler(context);
+    public IUncompressResult handle(final ICompressContext context) {
+        return this.doHandler(context);
     }
 
-    protected void doHandler(final ICompressContext context) {
+    protected IUncompressResult doHandler(final ICompressContext context) {
         final InputStream sourceStream = context.uncompressStream();
         final File targetDir = context.targetPath().toFile();
         final String password = context.password();
@@ -73,6 +74,9 @@ abstract class AbstractUnArchiveHandler implements IUnCompressHandler {
                 // 这些作为一个对象，避免对于文件的创建。
                 entry = inputStream.getNextEntry();
             }
+
+            //TODO: 解压的结果处理
+            return null;
         } catch (IOException e) {
             throw new CompressRuntimeException(e);
         }

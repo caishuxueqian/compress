@@ -3,6 +3,7 @@ package com.github.houbb.compress.api.impl;
 import com.github.houbb.compress.api.ICompress;
 import com.github.houbb.compress.api.ICompressContext;
 import com.github.houbb.compress.api.ICompressResult;
+import com.github.houbb.compress.api.IUncompressResult;
 import com.github.houbb.compress.handler.factory.CompressFactory;
 import com.github.houbb.compress.handler.factory.UnCompressFactory;
 import com.github.houbb.heaven.annotation.ThreadSafe;
@@ -25,8 +26,8 @@ public class Compress implements ICompress {
     }
 
     @Override
-    public void uncompress(ICompressContext compressContext) {
-        UnCompressFactory.getHandler(compressContext.compressType()).handle(compressContext);
+    public IUncompressResult uncompress(ICompressContext compressContext) {
+        return UnCompressFactory.getHandler(compressContext.compressType()).handle(compressContext);
     }
 
 }

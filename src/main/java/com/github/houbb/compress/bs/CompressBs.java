@@ -3,12 +3,14 @@ package com.github.houbb.compress.bs;
 import com.github.houbb.compress.api.ICompress;
 import com.github.houbb.compress.api.ICompressContext;
 import com.github.houbb.compress.api.ICompressResult;
+import com.github.houbb.compress.api.IUncompressResult;
 import com.github.houbb.compress.api.impl.Compress;
 import com.github.houbb.compress.constant.enums.CompressTypeEnum;
+import com.github.houbb.compress.support.result.compress.ICompressResultHandler;
+import com.github.houbb.compress.support.result.uncompress.IUncompressResultHandler;
 import com.github.houbb.heaven.support.instance.impl.Instances;
 import com.github.houbb.heaven.util.common.ArgUtil;
 
-import java.io.File;
 import java.io.InputStream;
 
 /**
@@ -168,21 +170,29 @@ public final class CompressBs {
 
     /**
      * 压缩
-     * @since 0.0.1
+     * @param handler 处理类
+     * @param <R> 泛型
+     * @return 解压处理结果
+     * @since 0.0.5
      */
-    public ICompressResult compress() {
+    public <R> R compress(final ICompressResultHandler<R> handler) {
         final ICompressContext context = buildCompressContextBs();
-        return compress.compress(context);
+        ICompressResult result = compress.compress(context);
+        return handler.handler(result);
     }
 
     /**
      * 解压缩
+     * @param handler 处理类
+     * @param <R> 泛型
+     * @return 结果
      * @since 0.0.1
      */
-    public void uncompress() {
+    public <R> R uncompress(final IUncompressResultHandler<R> handler) {
         final CompressContextBs context = buildCompressContextBs();
         context.uncompressStream();
-        compress.uncompress(context);
+        IUncompressResult result = compress.uncompress(context);
+        return handler.handler(result);
     }
 
     /**
@@ -192,7 +202,7 @@ public final class CompressBs {
      */
     private CompressContextBs buildCompressContextBs() {
         return CompressContextBs.newInstance()
-                .isRelativePath(relativePath)
+                .relativePath(relativePath)
                 .compressSources(compressSources)
                 .target(target)
                 .compressType(compressType)

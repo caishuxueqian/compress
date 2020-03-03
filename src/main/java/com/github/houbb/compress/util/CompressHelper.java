@@ -1,15 +1,18 @@
 package com.github.houbb.compress.util;
 
+import com.github.houbb.compress.api.ICompressResult;
+import com.github.houbb.compress.api.IUncompressResult;
 import com.github.houbb.compress.bs.CompressBs;
 import com.github.houbb.compress.constant.enums.CompressTypeEnum;
 import com.github.houbb.compress.exception.CompressRuntimeException;
+import com.github.houbb.compress.support.result.compress.impl.CompressResultHandlers;
+import com.github.houbb.compress.support.result.uncompress.impl.UncompressResultHandlers;
 import com.github.houbb.heaven.constant.PunctuationConst;
 import com.github.houbb.heaven.util.common.ArgUtil;
 import com.github.houbb.heaven.util.io.FileUtil;
 import com.github.houbb.heaven.util.io.StreamUtil;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -34,11 +37,12 @@ public final class CompressHelper {
      * @param source 原始文件路径
      * @since 0.0.4
      */
-    public static void compress(final String source) {
+    public static ICompressResult compress(final String source) {
         final String target = FileUtil.getDirPath(source) + FileUtil.getFileName(source)
                 + PunctuationConst.DOT
                 + CompressTypeEnum.ZIP.fileSuffix();
-        compress(CompressTypeEnum.ZIP, source, target);
+
+        return compress(CompressTypeEnum.ZIP, source, target);
     }
 
     /**
@@ -50,10 +54,11 @@ public final class CompressHelper {
      * @param target 目标文件路径
      * @since 0.0.4
      */
-    public static void compress(final String source, final String target) {
+    public static ICompressResult compress(final String source, final String target) {
         final String fileSuffix = FileUtil.getSuffix(target);
         CompressTypeEnum compressTypeEnum = CompressTypeEnum.of(fileSuffix);
-        compress(compressTypeEnum, source, target);
+
+        return compress(compressTypeEnum, source, target);
     }
 
     /**
@@ -64,14 +69,17 @@ public final class CompressHelper {
      * @param target           目标文件路径
      * @since 0.0.4
      */
-    public static void compress(final CompressTypeEnum compressTypeEnum,
-                                final String source,
-                                final String target) {
+    public static ICompressResult compress(final CompressTypeEnum compressTypeEnum,
+                                           final String source,
+                                           final String target) {
         ArgUtil.notNull(compressTypeEnum, "compressTypeEnum");
         ArgUtil.notEmpty(source, "source");
         ArgUtil.notEmpty(target, "target");
 
-        CompressBs.newInstance(compressTypeEnum).compressSources(source).target(target).compress();
+        return CompressBs.newInstance(compressTypeEnum)
+                .compressSources(source)
+                .target(target)
+                .compress(CompressResultHandlers.defaults());
     }
 
     /**
@@ -82,15 +90,15 @@ public final class CompressHelper {
      * @param targetDir        目标文件夹路径
      * @since 0.0.4
      */
-    public static void uncompress(final CompressTypeEnum compressTypeEnum,
-                                  final String source,
-                                  final String targetDir) {
+    public static IUncompressResult uncompress(final CompressTypeEnum compressTypeEnum,
+                                               final String source,
+                                               final String targetDir) {
         ArgUtil.notNull(compressTypeEnum, "compressTypeEnum");
         ArgUtil.notEmpty(source, "source");
         ArgUtil.notEmpty(targetDir, "target");
 
         try (InputStream inputStream = new FileInputStream(source)) {
-            uncompress(compressTypeEnum, inputStream, targetDir);
+            return uncompress(compressTypeEnum, inputStream, targetDir);
         } catch (IOException e) {
             throw new CompressRuntimeException(e);
         }
@@ -104,7 +112,7 @@ public final class CompressHelper {
      * @param targetDir        目标文件夹路径
      * @since 0.0.4
      */
-    public static void uncompress(final CompressTypeEnum compressTypeEnum,
+    public static IUncompressResult uncompress(final CompressTypeEnum compressTypeEnum,
                                   final InputStream sourceStream,
                                   final String targetDir) {
         ArgUtil.notNull(compressTypeEnum, "compressTypeEnum");
@@ -112,10 +120,10 @@ public final class CompressHelper {
         ArgUtil.notEmpty(targetDir, "target");
 
         try {
-            CompressBs.newInstance(compressTypeEnum)
+            return CompressBs.newInstance(compressTypeEnum)
                     .uncompressStream(sourceStream)
                     .target(targetDir)
-                    .uncompress();
+                    .uncompress(UncompressResultHandlers.defaults());
         } finally {
             StreamUtil.closeStream(sourceStream);
         }

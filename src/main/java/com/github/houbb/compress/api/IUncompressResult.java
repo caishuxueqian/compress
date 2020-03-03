@@ -1,7 +1,5 @@
 package com.github.houbb.compress.api;
 
-import java.io.File;
-
 /**
  * 解压结果
  * <p> project: compress-ICompress </p>

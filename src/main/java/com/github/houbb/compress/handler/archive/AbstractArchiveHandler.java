@@ -137,7 +137,7 @@ abstract class AbstractArchiveHandler implements ICompressHandler {
     private String getEntryName(final Path publicParentPath,
                                 final File fileToArchive,
                                 final ICompressContext compressContext) {
-        if(compressContext.isRelativePath()) {
+        if(compressContext.relativePath()) {
             return PathUtil.getRelativePath(publicParentPath, fileToArchive.toPath());
         } else {
             // 返回全路径

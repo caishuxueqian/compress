@@ -23,7 +23,8 @@ public interface ICompress {
      * 解压缩
      * @param compressContext 上下文
      * @since 0.0.4
+     * @return 解压结果
      */
-    void uncompress(final ICompressContext compressContext);
+    IUncompressResult uncompress(final ICompressContext compressContext);
 
 }

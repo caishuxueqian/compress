@@ -27,12 +27,6 @@ public interface ICompressContext {
     List<Path> compressSources();
 
     /**
-     * 获取第一个原始文件 path
-     * @return path 文件信息
-     */
-    Path sourcePathFirst();
-
-    /**
      * 目标文件路径
      * @return 目标文件
      */
@@ -49,8 +43,9 @@ public interface ICompressContext {
      * 1. 默认使用相对位置作为 entry 的名称。
      * 2. 解压归档的时候注意：要创建对应的文件路径信息。
      * @return 是否
+     * @since 0.0.4
      */
-    boolean isRelativePath();
+    boolean relativePath();
 
     /**
      * 压缩类型
