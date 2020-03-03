@@ -1,7 +1,5 @@
 package com.github.houbb.compress.api;
 
-import java.io.File;
-
 /**
  * 压缩结果
  * <p> project: compress-ICompress </p>
@@ -13,10 +11,25 @@ import java.io.File;
 public interface ICompressResult {
 
     /**
-     * 文件信息
+     * 文件输入流
+     * @return 输入流
      * @since 0.0.5
-     * @return 文件信息
      */
-    File file();
+    byte[] bytes();
+
+    /**
+     * 目标路径
+     * @return 目标路径
+     * @since 0.0.5
+     */
+    String targetPath();
+
+    /**
+     * 移除异常
+     * （1）只有在不创建文件时会做删除处理。
+     * @return 移除异常
+     * @since 0.0.5
+     */
+    Exception compressError();
 
 }

@@ -6,6 +6,7 @@ import com.github.houbb.compress.api.impl.CompressResult;
 import com.github.houbb.compress.exception.CompressRuntimeException;
 import com.github.houbb.compress.handler.ICompressHandler;
 import com.github.houbb.heaven.support.condition.ICondition;
+import com.github.houbb.heaven.util.io.FileUtil;
 import com.github.houbb.heaven.util.nio.PathUtil;
 import com.github.houbb.heaven.util.util.CollectionUtil;
 import org.apache.commons.compress.archivers.ArchiveEntry;
@@ -55,11 +56,13 @@ abstract class AbstractArchiveHandler implements ICompressHandler {
      */
     protected ICompressResult doHandle(final ICompressContext context) {
         // 基础信息
+        final String targetPath = context.targetPath().toString();
         final File targetFile = context.targetPath().toFile();
         final List<Path> pathList = buildAllPaths(context.compressSources());
         final Path publicParentPath = PathUtil.getPublicParentPath(context.compressSources());
         final String password = context.password();
 
+        CompressResult compressResult = CompressResult.newInstance();
         try(ArchiveOutputStream outputStream = this.getArchiveOutputStream(targetFile, password)){
             // 循环添加 entry 进入归档
             ArchiveEntry entry = null;
@@ -79,18 +82,26 @@ abstract class AbstractArchiveHandler implements ICompressHandler {
                     //ignore
                 }
             }
-            // 判空关闭处理 @since 0.0.3
+            // 判空关闭处理 @since 0.0.3`
             if(entry != null) {
                 outputStream.closeArchiveEntry();
             }
 
-            // TODO: 是否写入？或者可以临走时进行文件的删除
-            if(!context.createFile()) {
-                targetFile.deleteOnExit();
-            }
-            return CompressResult.newInstance().file(targetFile);
+            byte[] bytes = FileUtil.getFileBytes(targetFile);
+            return compressResult.bytes(bytes)
+                    .targetPath(targetPath);
         } catch (IOException e) {
             throw new CompressRuntimeException(e);
+        } finally {
+            if(!context.createFile()) {
+                // 移除文件
+                try {
+                    Files.delete(targetFile.toPath());
+                } catch (IOException e) {
+                    // 记录下删除失败的异常
+                    compressResult.compressError(e);
+                }
+            }
         }
     }
 

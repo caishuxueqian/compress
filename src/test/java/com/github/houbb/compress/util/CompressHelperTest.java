@@ -1,8 +1,14 @@
 package com.github.houbb.compress.util;
 
+import com.github.houbb.compress.api.ICompressResult;
+import com.github.houbb.compress.bs.CompressBs;
 import com.github.houbb.compress.constant.enums.CompressTypeEnum;
+import com.github.houbb.compress.support.result.compress.impl.CompressResultHandlers;
+import com.github.houbb.heaven.util.io.FileUtil;
 import org.junit.Ignore;
 import org.junit.Test;
+
+import java.io.FileNotFoundException;
 
 /**
  * <p> project: compress-CompressHelper </p>
@@ -16,11 +22,29 @@ public final class CompressHelperTest {
 
     @Test
     public void compressTest() {
-        final String s = "D:\\_github\\compress\\src\\test\\resources\\compress_enum_s_t.txt";
-        final String t = "D:\\_github\\compress\\src\\test\\resources\\compress_enum_s_t.zip";
+        final String s = "D:\\github\\compress\\src\\test\\resources\\compress_enum_s_t.txt";
+        final String t = "D:\\github\\compress\\src\\test\\resources\\compress_enum_s_t.zip";
 
         CompressHelper.compress(CompressTypeEnum.ZIP, s, t);
     }
+
+    @Test
+    public void compressDeleteTest() {
+        final String s = "D:\\github\\compress\\src\\test\\resources\\compress_enum_s_t_delete.txt";
+        final String t = "D:\\github\\compress\\src\\test\\resources\\compress_enum_s_t_delete.zip";
+
+        ICompressResult result = CompressBs.newInstance(CompressTypeEnum.ZIP)
+                .compressSources(s)
+                .target(t)
+                .createFile(false)
+                .compress(CompressResultHandlers.defaults());
+
+        final String targetPath = result.targetPath();
+        final byte[] bytes = result.bytes();
+
+        FileUtil.createFile(targetPath, bytes);
+    }
+
 
     @Test
     public void compress2Test() {
