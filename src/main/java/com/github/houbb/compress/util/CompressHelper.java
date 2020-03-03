@@ -35,6 +35,7 @@ public final class CompressHelper {
      * 2. 默认采用待压缩文件所在的路径。
      *
      * @param source 原始文件路径
+     * @return 结果
      * @since 0.0.4
      */
     public static ICompressResult compress(final String source) {
@@ -52,6 +53,7 @@ public final class CompressHelper {
      *
      * @param source 原始文件路径
      * @param target 目标文件路径
+     * @return 结果
      * @since 0.0.4
      */
     public static ICompressResult compress(final String source, final String target) {
@@ -68,6 +70,7 @@ public final class CompressHelper {
      * @param source           原始文件路径
      * @param target           目标文件路径
      * @since 0.0.4
+     * @return 结果
      */
     public static ICompressResult compress(final CompressTypeEnum compressTypeEnum,
                                            final String source,
@@ -88,6 +91,7 @@ public final class CompressHelper {
      * @param compressTypeEnum 压缩类型
      * @param source           原始文件路径
      * @param targetDir        目标文件夹路径
+     * @return 结果
      * @since 0.0.4
      */
     public static IUncompressResult uncompress(final CompressTypeEnum compressTypeEnum,
@@ -110,6 +114,7 @@ public final class CompressHelper {
      * @param compressTypeEnum 压缩类型
      * @param sourceStream     原始文件流
      * @param targetDir        目标文件夹路径
+     * @return 结果
      * @since 0.0.4
      */
     public static IUncompressResult uncompress(final CompressTypeEnum compressTypeEnum,
@@ -134,25 +139,27 @@ public final class CompressHelper {
      *
      * @param source    原始文件路径
      * @param targetDir 目标文件夹路径
+     * @return 结果
      * @since 0.0.4
      */
-    public static void uncompress(final String source,
+    public static IUncompressResult uncompress(final String source,
                                   final String targetDir) {
         final String fileSuffix = FileUtil.getSuffix(source);
 
         CompressTypeEnum compressTypeEnum = CompressTypeEnum.of(fileSuffix);
-        uncompress(compressTypeEnum, source, targetDir);
+        return uncompress(compressTypeEnum, source, targetDir);
     }
 
     /**
      * 执行文件解压
      *
      * @param source 原始文件路径
+     * @return 结果
      * @since 0.0.4
      */
-    public static void uncompress(final String source) {
+    public static IUncompressResult uncompress(final String source) {
         final String targetDir = FileUtil.getDirPath(source);
-        uncompress(source, targetDir);
+        return uncompress(source, targetDir);
     }
 
 }
