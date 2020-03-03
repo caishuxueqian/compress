@@ -5,6 +5,8 @@ import com.github.houbb.compress.api.ICompressResult;
 import com.github.houbb.compress.api.impl.CompressResult;
 import com.github.houbb.compress.exception.CompressRuntimeException;
 import com.github.houbb.compress.handler.ICompressHandler;
+import com.github.houbb.compress.support.file.IFileInfo;
+import com.github.houbb.compress.support.file.impl.FileInfo;
 import com.github.houbb.heaven.support.condition.ICondition;
 import com.github.houbb.heaven.util.io.FileUtil;
 import com.github.houbb.heaven.util.nio.PathUtil;
@@ -88,8 +90,11 @@ abstract class AbstractArchiveHandler implements ICompressHandler {
             }
 
             byte[] bytes = FileUtil.getFileBytes(targetFile);
-            return compressResult.bytes(bytes)
-                    .targetPath(targetPath);
+
+            // 设置文件信息
+            IFileInfo fileInfo = FileInfo.newInstance().content(bytes)
+                    .path(targetPath);
+            return compressResult.fileInfo(fileInfo);
         } catch (IOException e) {
             throw new CompressRuntimeException(e);
         } finally {

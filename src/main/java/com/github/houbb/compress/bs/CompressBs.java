@@ -189,7 +189,7 @@ public final class CompressBs {
      * @since 0.0.1
      */
     public <R> R uncompress(final IUncompressResultHandler<R> handler) {
-        final CompressContextBs context = buildCompressContextBs();
+        final CompressContextBs context = buildUnompressContextBs();
         context.uncompressStream();
         IUncompressResult result = compress.uncompress(context);
         return handler.handler(result);
@@ -204,6 +204,21 @@ public final class CompressBs {
         return CompressContextBs.newInstance()
                 .relativePath(relativePath)
                 .compressSources(compressSources)
+                .target(target)
+                .compressType(compressType)
+                .password(password)
+                .createFile(createFile)
+                ;
+    }
+
+    /**
+     * 构建解压缩上下文引导类
+     * @return 引导类
+     * @since 0.0.5
+     */
+    private CompressContextBs buildUnompressContextBs() {
+        return CompressContextBs.newInstance()
+                .relativePath(relativePath)
                 .target(target)
                 .compressType(compressType)
                 .password(password)

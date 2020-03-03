@@ -1,5 +1,7 @@
 package com.github.houbb.compress.api;
 
+import com.github.houbb.compress.support.file.IFileInfo;
+
 /**
  * 压缩结果
  * <p> project: compress-ICompress </p>
@@ -11,18 +13,11 @@ package com.github.houbb.compress.api;
 public interface ICompressResult {
 
     /**
-     * 文件输入流
-     * @return 输入流
+     * 文件信息
+     * @return 信息
      * @since 0.0.5
      */
-    byte[] bytes();
-
-    /**
-     * 目标路径
-     * @return 目标路径
-     * @since 0.0.5
-     */
-    String targetPath();
+    IFileInfo fileInfo();
 
     /**
      * 移除异常

@@ -1,6 +1,7 @@
 package com.github.houbb.compress.api.impl;
 
 import com.github.houbb.compress.api.ICompressResult;
+import com.github.houbb.compress.support.file.IFileInfo;
 
 import java.io.File;
 import java.io.InputStream;
@@ -17,16 +18,10 @@ import java.io.InputStream;
 public class CompressResult implements ICompressResult {
 
     /**
-     * 文件内容
+     * 文件信息
      * @since 0.0.5
      */
-    private byte[] bytes;
-
-    /**
-     * 目标文件路径
-     * @since 0.0.5
-     */
-    private String targetPath;
+    private IFileInfo fileInfo;
 
     /**
      * 压缩异常
@@ -39,22 +34,12 @@ public class CompressResult implements ICompressResult {
     }
 
     @Override
-    public byte[] bytes() {
-        return bytes;
+    public IFileInfo fileInfo() {
+        return fileInfo;
     }
 
-    public CompressResult bytes(byte[] bytes) {
-        this.bytes = bytes;
-        return this;
-    }
-
-    @Override
-    public String targetPath() {
-        return targetPath;
-    }
-
-    public CompressResult targetPath(String targetPath) {
-        this.targetPath = targetPath;
+    public CompressResult fileInfo(IFileInfo fileInfo) {
+        this.fileInfo = fileInfo;
         return this;
     }
 

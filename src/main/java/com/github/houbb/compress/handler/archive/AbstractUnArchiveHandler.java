@@ -2,8 +2,12 @@ package com.github.houbb.compress.handler.archive;
 
 import com.github.houbb.compress.api.ICompressContext;
 import com.github.houbb.compress.api.IUncompressResult;
+import com.github.houbb.compress.api.impl.UncompressResult;
 import com.github.houbb.compress.exception.CompressRuntimeException;
 import com.github.houbb.compress.handler.IUncompressHandler;
+import com.github.houbb.compress.support.file.IFileInfo;
+import com.github.houbb.compress.support.file.impl.FileInfo;
+import com.github.houbb.heaven.util.guava.Guavas;
 import org.apache.commons.compress.archivers.ArchiveEntry;
 import org.apache.commons.compress.archivers.ArchiveInputStream;
 
@@ -11,6 +15,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 /**
  * @author binbin.hou
@@ -42,41 +47,59 @@ abstract class AbstractUnArchiveHandler implements IUncompressHandler {
         return this.doHandler(context);
     }
 
+    /**
+     * 执行处理
+     * @param context 上下文
+     * @return 结果
+     * @since 0.0.5
+     */
     protected IUncompressResult doHandler(final ICompressContext context) {
         final InputStream sourceStream = context.uncompressStream();
         final File targetDir = context.targetPath().toFile();
         final String password = context.password();
+        final boolean createFile = context.createFile();
 
+        final UncompressResult uncompressResult = UncompressResult.newInstance();
+        List<IFileInfo> fileInfos = Guavas.newArrayList();
         try(ArchiveInputStream inputStream = getArchiveInputStream(sourceStream, password)) {
             ArchiveEntry entry = inputStream.getNextEntry();
             while (entry != null) {
+                final String path = buildFilePath(targetDir, entry);
+                FileInfo fileInfo = FileInfo.newInstance().path(path);
+
                 // 处理文件夹
                 if (entry.isDirectory()) {
-                    final File dir = buildFile(targetDir, entry);
-                    dir.mkdirs();
-                    entry = inputStream.getNextEntry();
-                    continue;
-                }
-
-                // 处理单个文件
-                // 创建以来的文件夹。
-                final File file = buildFile(targetDir, entry);
-                file.getParentFile().mkdirs();
-                try(FileOutputStream out = new FileOutputStream(file)) {
+                    // 创建文件
+                    if(createFile) {
+                        final File dir = new File(path);
+                        dir.mkdirs();
+                    }
+                    // 设置为文件夹
+                    fileInfo.directory(true);
+                } else {
+                    // 处理文件
                     final int entrySize = getEntrySize(entry);
-                    //TODO: 这里这种写法可能存在问题。
                     byte[] content = new byte[entrySize];
-                    inputStream.read(content, 0, content.length);
-                    out.write(content);
+                    //这里读取可能不准，后续可以修正
+                    inputStream.read(content, 0, entrySize);
+                    fileInfo.content(content);
+
+                    if(createFile) {
+                        final File file = new File(path);
+                        file.getParentFile().mkdirs();
+                        try(FileOutputStream out = new FileOutputStream(file)) {
+                            out.write(content);
+                        }
+                    }
                 }
 
-                // 可否返回 targetDir+entryName+bytes[] 信息？
-                // 这些作为一个对象，避免对于文件的创建。
+                fileInfos.add(fileInfo);
                 entry = inputStream.getNextEntry();
             }
 
-            //TODO: 解压的结果处理
-            return null;
+            // 最后返回结果
+            uncompressResult.fileInfos(fileInfos);
+            return uncompressResult;
         } catch (IOException e) {
             throw new CompressRuntimeException(e);
         }
@@ -87,9 +110,23 @@ abstract class AbstractUnArchiveHandler implements IUncompressHandler {
      * @param targetDir 目标文件夹
      * @param entry 明细
      * @return 结果
+     * @since 0.0.1
      */
+    @Deprecated
     private File buildFile(final File targetDir, final ArchiveEntry entry) {
-        return new File(targetDir.getPath() + File.separator + entry.getName());
+        final String path = buildFilePath(targetDir, entry);
+        return new File(path);
+    }
+
+    /**
+     * 构建文件路径
+     * @param targetDir 目标文件夹
+     * @param entry 明细
+     * @return 结果
+     * @since 0.0.5
+     */
+    private String buildFilePath(final File targetDir, final ArchiveEntry entry) {
+        return targetDir.getPath() + File.separator + entry.getName();
     }
 
 }
