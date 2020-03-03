@@ -31,7 +31,7 @@
 
         <!--============================== OTHER ==============================-->
         <junit.version>4.12</junit.version>
-        <commons-compress.version>1.18</commons-compress.version>
+        <commons-compress.version>1.19</commons-compress.version>
         <xz.version>1.8</xz.version>
     </properties>
 
