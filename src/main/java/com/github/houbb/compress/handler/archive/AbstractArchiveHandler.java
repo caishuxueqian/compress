@@ -55,6 +55,7 @@ abstract class AbstractArchiveHandler implements ICompressHandler {
     /**
      * 默认的实现方式
      * @param context 上下文
+     * @return 结果
      */
     protected ICompressResult doHandle(final ICompressContext context) {
         // 基础信息
