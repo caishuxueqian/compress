@@ -88,6 +88,34 @@ public final class CompressHelper {
     /**
      * 执行文件解压
      *
+     * @param source 原始文件路径
+     * @return 结果
+     * @since 0.0.4
+     */
+    public static IUncompressResult uncompress(final String source) {
+        final String targetDir = FileUtil.getDirPath(source);
+        return uncompress(source, targetDir);
+    }
+
+    /**
+     * 执行文件解压
+     *
+     * @param source    原始文件路径
+     * @param targetDir 目标文件夹路径
+     * @return 结果
+     * @since 0.0.4
+     */
+    public static IUncompressResult uncompress(final String source,
+                                               final String targetDir) {
+        final String fileSuffix = FileUtil.getSuffix(source);
+
+        CompressTypeEnum compressTypeEnum = CompressTypeEnum.of(fileSuffix);
+        return uncompress(compressTypeEnum, source, targetDir);
+    }
+
+    /**
+     * 执行文件解压
+     *
      * @param compressTypeEnum 压缩类型
      * @param source           原始文件路径
      * @param targetDir        目标文件夹路径
@@ -102,81 +130,12 @@ public final class CompressHelper {
         ArgUtil.notEmpty(targetDir, "target");
 
         try (InputStream inputStream = new FileInputStream(source)) {
-            return uncompress(compressTypeEnum, inputStream, targetDir);
+            return CompressBs.newInstance(compressTypeEnum)
+                    .uncompressStream(inputStream)
+                    .target(targetDir)
+                    .uncompress(UncompressResultHandlers.defaults());
         } catch (IOException e) {
             throw new CompressRuntimeException(e);
-        }
-    }
-
-    /**
-     * 执行文件解压
-     *
-     * @param compressTypeEnum 压缩类型
-     * @param sourceStream     原始文件流
-     * @param targetDir        目标文件夹路径
-     * @return 结果
-     * @since 0.0.4
-     */
-    public static IUncompressResult uncompress(final CompressTypeEnum compressTypeEnum,
-                                  final InputStream sourceStream,
-                                  final String targetDir) {
-        return uncompress(compressTypeEnum, sourceStream, targetDir, true);
-    }
-
-    /**
-     * 执行文件解压
-     *
-     * @param source    原始文件路径
-     * @param targetDir 目标文件夹路径
-     * @return 结果
-     * @since 0.0.4
-     */
-    public static IUncompressResult uncompress(final String source,
-                                  final String targetDir) {
-        final String fileSuffix = FileUtil.getSuffix(source);
-
-        CompressTypeEnum compressTypeEnum = CompressTypeEnum.of(fileSuffix);
-        return uncompress(compressTypeEnum, source, targetDir);
-    }
-
-    /**
-     * 执行文件解压
-     *
-     * @param source 原始文件路径
-     * @return 结果
-     * @since 0.0.4
-     */
-    public static IUncompressResult uncompress(final String source) {
-        final String targetDir = FileUtil.getDirPath(source);
-        return uncompress(source, targetDir);
-    }
-
-    /**
-     * 执行文件解压
-     *
-     * @param compressTypeEnum 压缩类型
-     * @param sourceStream     原始文件流
-     * @param targetDir        目标文件夹路径
-     * @param createFile 创建文件
-     * @return 结果
-     * @since 0.0.6
-     */
-    public static IUncompressResult uncompress(final CompressTypeEnum compressTypeEnum,
-                                               final InputStream sourceStream,
-                                               final String targetDir,
-                                               final boolean createFile) {
-        ArgUtil.notNull(compressTypeEnum, "compressTypeEnum");
-        ArgUtil.notNull(sourceStream, "sourceStream");
-        ArgUtil.notEmpty(targetDir, "target");
-
-        try {
-            return CompressBs.newInstance(compressTypeEnum)
-                    .uncompressStream(sourceStream)
-                    .target(targetDir)
-                    .createFile(createFile)
-                    .uncompress(UncompressResultHandlers.defaults());
-        } finally {
-            StreamUtil.closeStream(sourceStream);
         }
     }
 

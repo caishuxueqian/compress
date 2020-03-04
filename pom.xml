@@ -27,7 +27,7 @@
 
         <!--============================== INTER ==============================-->
         <plugin.gen.version>1.0.6</plugin.gen.version>
-        <heaven.version>0.1.86</heaven.version>
+        <heaven.version>0.1.87-SNAPSHOT</heaven.version>
 
         <!--============================== OTHER ==============================-->
         <junit.version>4.12</junit.version>

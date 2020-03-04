@@ -7,12 +7,15 @@ import com.github.houbb.compress.exception.CompressRuntimeException;
 import com.github.houbb.compress.handler.IUncompressHandler;
 import com.github.houbb.compress.support.file.IFileInfo;
 import com.github.houbb.compress.support.file.impl.FileInfo;
-import com.github.houbb.heaven.annotation.CommonEager;
 import com.github.houbb.heaven.util.guava.Guavas;
+import com.github.houbb.heaven.util.io.StreamUtil;
 import org.apache.commons.compress.archivers.ArchiveEntry;
 import org.apache.commons.compress.archivers.ArchiveInputStream;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -76,7 +79,7 @@ abstract class AbstractUnArchiveHandler implements IUncompressHandler {
                     fileInfo.directory(true);
                 } else {
                     // 处理文件
-                    byte[] bytes = inputStreamToBytes(inputStream);
+                    byte[] bytes = StreamUtil.inputStreamToBytes(inputStream);
                     fileInfo.content(bytes);
 
                     if(createFile) {
@@ -95,27 +98,6 @@ abstract class AbstractUnArchiveHandler implements IUncompressHandler {
             // 最后返回结果
             uncompressResult.fileInfos(fileInfos);
             return uncompressResult;
-        } catch (IOException e) {
-            throw new CompressRuntimeException(e);
-        }
-    }
-
-    /**
-     * 输入流转为字节流
-     * @param inputStream 输入流
-     * @return 字节数组
-     * @since 0.0.5
-     */
-    @CommonEager
-    public static byte[] inputStreamToBytes(final InputStream inputStream) {
-        try(ByteArrayOutputStream output = new ByteArrayOutputStream()) {
-            byte[] buffer = new byte[1024];
-            int n = 0;
-            while (-1 != (n = inputStream.read(buffer))) {
-                output.write(buffer, 0, n);
-            }
-
-            return output.toByteArray();
         } catch (IOException e) {
             throw new CompressRuntimeException(e);
         }

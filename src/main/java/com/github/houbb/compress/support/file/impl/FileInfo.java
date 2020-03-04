@@ -29,12 +29,6 @@ public class FileInfo implements IFileInfo {
     private boolean directory;
 
     /**
-     * 子元素
-     * @since 0.0.5
-     */
-    private List<IFileInfo> children;
-
-    /**
      * 新建对象实例
      * @return 实例
      * @since 0.0.5
@@ -60,16 +54,6 @@ public class FileInfo implements IFileInfo {
 
     public FileInfo content(byte[] content) {
         this.content = content;
-        return this;
-    }
-
-    @Override
-    public List<IFileInfo> children() {
-        return children;
-    }
-
-    public FileInfo children(List<IFileInfo> children) {
-        this.children = children;
         return this;
     }
 

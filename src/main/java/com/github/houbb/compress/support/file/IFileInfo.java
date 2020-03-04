@@ -1,7 +1,5 @@
 package com.github.houbb.compress.support.file;
 
-import java.util.List;
-
 /**
  * @author binbin.hou
  * @since 0.0.5
@@ -28,13 +26,5 @@ public interface IFileInfo {
      * @since 0.0.1
      */
     boolean directory();
-
-    /**
-     * 子元素列表
-     * @return 元素列表
-     * @since 0.0.5
-     */
-    @Deprecated
-    List<IFileInfo> children();
 
 }
